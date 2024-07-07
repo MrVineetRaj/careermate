@@ -7,13 +7,32 @@ export const navLinks = [
     title: "About",
     href: "#about",
   },
+  // {
+  //   title: "Contact",
+  //   href: "#contact",
+  // },
+  // {
+  //   title: "Docs",
+  //   href: "/docs",
+  // },
+];
+
+export const portfolioNavLinks = [
   {
-    title: "Contact",
-    href: "#contact",
+    title: "About",
+    href: "#about",
   },
   {
-    title: "Docs",
-    href: "/docs",
+    title: "Skills",
+    href: "#skills",
+  },
+  {
+    title: "Work Experience",
+    href: "#experience",
+  },
+  {
+    title: "Certifications",
+    href: "#certifications",
   },
 ];
 
@@ -335,10 +354,207 @@ export const userResume = {
   ],
 };
 
+export const userPortfolioFormate = {
+  Contact: {
+    email: "String",
+    links: [
+      {
+        title: "String",
+        href: "String",
+      },
+    ],
+  },
+  name: "String",
+  jobProfile: "String",
+  summary: "String maximum 60 words and minimum 40 words",
+  imageUrl: "String",
+  about: "String",
+  skills: [
+    {
+      label: "String",
+      values: "String",
+    },
+  ],
+  experiences: [
+    {
+      title: "String",
+      company: "String",
+      location: "String",
+      startDate: "String",
+      endDate: "String",
+      description: [String],
+    },
+  ],
+  projects: [
+    {
+      title: "String",
+      description: [String],
+      imageUrl: "String",
+      technologies: "String",
+      GitHub: "String",
+    },
+  ],
+  education: [
+    {
+      degree: "String",
+      institution: "String",
+      location: "String",
+      startYear: "String",
+      endYear: "String",
+      marks: "String",
+    },
+  ],
+  achievements_certification: [
+    {
+      title: "String",
+      description: "String",
+    },
+  ],
+  Certifications: [
+    {
+      title: "String",
+      description: "String",
+    },
+  ],
+};
+
 export const prompt = {
   resume: ` in formate of ${JSON.stringify(
     userResumeFormate
   )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and there should be maximum of 3 skill section and each can have multiple values and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the relevance and sort the skills according to their importance for the given job profile`,
+
+  portfolio: ` in formate of ${JSON.stringify(
+    userPortfolioFormate
+  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the complexity or sort sort everything that fits you best`,
 };
 
 // for job profile and company name create a resume using data {} in formate of userResumeFormate and provide the json data and nothing else
+
+export const userPortfolio = {
+  Contact: {
+    email: "johndoe@example.com",
+    links: [
+      {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/in/johndoe",
+      },
+      {
+        title: "GitHub",
+        href: "https://www.github.com/johndoe",
+      },
+    ],
+  },
+
+  name: "John Doe",
+  jobProfile: "Software Engineer",
+  summary:
+    "Aspiring software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
+
+  imageUrl: "/images/my-image.jpg",
+
+  about:
+    "I am a software engineer with experience in building web applications using modern frameworks and technologies. I am passionate about learning new technologies and improving my skills to deliver high-quality software solutions that meet user needs. I enjoy working in collaborative environments and am always looking for opportunities to grow and develop as a software engineer and professional in the tech industry .",
+
+  skills: [
+    {
+      label: "Programming Languages",
+      values: "JavaScript, Python, Java, C++",
+    },
+    {
+      label: "Frameworks",
+      values: "React, Angular, Node.js, Django",
+    },
+    {
+      label: "Databases",
+      values: "MySQL, PostgreSQL, MongoDB",
+    },
+  ],
+  experiences: [
+    {
+      title: "Software Engineer",
+      company: "Tech Solutions",
+      location: "New York, NY",
+      startDate: "2018",
+      endDate: "Present",
+      description: [
+        "Developed and maintained web applications using React, Node.js, and PostgreSQL.",
+        "Collaborated with cross-functional teams to design and implement new features.",
+        "Conducted code reviews and provided technical guidance to junior developers.",
+      ],
+    },
+    {
+      title: "Software Developer",
+      company: "Code Co.",
+      location: "San Francisco, CA",
+      startDate: "2015",
+      endDate: "2018",
+      description: [
+        "Designed and developed software solutions for clients using Java, Spring Boot, and MySQL.",
+        "Implemented RESTful APIs to enable seamless communication between frontend and backend systems.",
+        "Conducted unit testing and debugging to ensure software quality and reliability.",
+      ],
+    },
+  ],
+  projects: [
+    {
+      title: "E-commerce Website",
+      description: [
+        "Developed a fully functional e-commerce website using React, Node.js, and MongoDB.",
+        "Implemented features such as product browsing, shopping cart, checkout, and order tracking.",
+        "Integrated with payment gateways and shipping services.",
+      ],
+      imageUrl: "https://example.com/ecommerce-website.png",
+      technologies: "React, Node.js, MongoDB",
+      GitHub: "https://github.com/johndoe/ecommerce-website",
+    },
+    {
+      title: "Social Media App",
+      description: [
+        "Developed a social media application using React Native and Firebase.",
+        "Implemented features such as user profiles, friend requests, messaging, and post sharing.",
+        "Successfully deployed the app to both iOS and Android platforms.",
+      ],
+      imageUrl: "https://example.com/social-media-app.png",
+      technologies: "React Native, Firebase",
+      GitHub: "https://github.com/johndoe/social-media-app",
+    },
+  ],
+  education: [
+    {
+      degree: "Bachelor of Science in Computer Science",
+      institution: "Stanford University",
+      location: "Stanford, CA",
+      startDate: "2015",
+      endDate: "2019",
+      marks: "3.8 GPA",
+    },
+  ],
+  achievements_certification: [
+    {
+      title: "Hackathon Winner",
+      description: "First place in the Tech Challenge Hackathon 2019.",
+    },
+    {
+      title: "Certified Scrum Master",
+      description: "Certified Scrum Master (CSM) from Scrum Alliance.",
+    },
+    {
+      title: "AWS Certified Developer",
+      description: "AWS Certified Developer - Associate.",
+    },
+    {
+      title: "Google Analytics Certified",
+      description: "Google Analytics Certified Professional.",
+    },
+  ],
+  Certifications: [
+    {
+      title: "Certified Scrum Master",
+      description: "Certified by Scrum Alliance",
+    },
+    {
+      title: "AWS Certified Developer - Associate",
+      description: "Certified by Amazon Web Services",
+    },
+  ],
+};

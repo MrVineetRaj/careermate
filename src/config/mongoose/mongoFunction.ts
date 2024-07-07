@@ -76,7 +76,33 @@ const createNewResume = async (
 const getUserResume = async (resumeId: string, userId: string) => {
   const res = await fetch(`/api/user-resume?r=${resumeId}&u=${userId}`);
   const data = await res.json();
-  
+
+  return data;
+};
+
+const createNewPortfolio = async (
+  owner: string,
+  ownerClerkId: string,
+  userPortfolio: any
+) => {
+  const res = await fetch("/api/user-portfolio", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ owner, ownerClerkId, userPortfolio }),
+  });
+  const response = await res.json();
+  toast({
+    title: response.message,
+    variant: response.type,
+  });
+  return response;
+};
+
+const getUserPortfolio = async (userId: string) => {
+  const res = await fetch(`/api/user-portfolio?u=${userId}`);
+  const data = await res.json();
   return data;
 };
 export {
@@ -86,4 +112,6 @@ export {
   updateUser,
   createNewResume,
   getUserResume,
+  createNewPortfolio,
+  getUserPortfolio,
 };
