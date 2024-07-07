@@ -1,6 +1,8 @@
+"use client";
 import Controls from "@/components/Dashboard/Resume/Controls";
 import ResumeSpace from "@/components/Dashboard/Resume/ResumeSpace";
-import React from "react";
+import { useCareerMateStore } from "@/store/store";
+import React, { useEffect } from "react";
 
 const page = () => {
   return (

@@ -51,6 +51,7 @@ export async function PATCH(req: Request) {
       type: "warning",
     });
   }
+  
   try {
     await connectDB();
     const userProfile = await UserProfile.findOne({ owner: userId });

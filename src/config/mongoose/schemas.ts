@@ -84,6 +84,77 @@ const userProfileSchema = new mongoose.Schema({
   ],
 });
 
+const userResumeSchema = new mongoose.Schema({
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  ownerClerkId: { type: String, required: true },
+  resume: {
+    template: { type: String, required: true, default: "template1" },
+    style: {
+      primaryColor: { type: String, required: true, default: "orange" },
+      secondaryColor: { type: String, required: true, default: "black" },
+      textColor: { type: String, required: true, default: "gray" },
+      textSize: { type: String, required: true, default: "12pt" },
+      headingSize: { type: String, required: true, default: "34pt" },
+      subHeadingSize: { type: String, required: true, default: "18pt" },
+      smallTextSize: { type: String, required: true, default: "10pt" },
+    },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: false },
+    location: { type: String, required: false },
+    summary: { type: String, required: false },
+    jobProfile: { type: String, required: false },
+    links: [
+      {
+        title: { type: String, required: false },
+        href: { type: String, required: false },
+      },
+    ],
+    skills: [
+      {
+        label: { type: String, required: false },
+        values: { type: String, required: false },
+      },
+    ],
+    projects: [
+      {
+        title: { type: String, required: false },
+        description: { type: [String], required: false },
+        imageUrl: { type: String, required: false },
+        technologies: { type: String, required: false },
+        GitHub: { type: String, required: false },
+        Demo: { type: String, required: false },
+      },
+    ],
+    experiences: [
+      {
+        title: { type: String, required: false },
+        company: { type: String, required: false },
+        location: { type: String, required: false },
+        startDate: { type: String, required: false },
+        endDate: { type: String, required: false },
+        description: { type: [String], required: false },
+      },
+    ],
+    education: [
+      {
+        degree: { type: String, required: false },
+        institution: { type: String, required: false },
+        location: { type: String, required: false },
+        startYear: { type: String, required: false },
+        endYear: { type: String, required: false },
+        marks: { type: String, required: false },
+      },
+    ],
+    achievements_Certification: [
+      {
+        title: { type: String, required: false },
+        description: { type: String, required: false },
+      },
+    ],
+  },
+});
+
 let User: any;
 try {
   User = mongoose.model("User");
@@ -98,4 +169,11 @@ try {
   UserProfile = mongoose.model("UserProfile", userProfileSchema);
 }
 
-export { User, UserProfile };
+let UserResume: any;
+try {
+  UserResume = mongoose.model("UserResume");
+} catch {
+  UserResume = mongoose.model("UserResume", userResumeSchema);
+}
+
+export { User, UserProfile, UserResume };

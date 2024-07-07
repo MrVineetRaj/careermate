@@ -257,7 +257,7 @@ export const userResumeFormate = {
   ],
 };
 
-export const exampleResume = {
+export const userResume = {
   name: "John Doe",
   email: "john.doe@email.com",
   phone: "123-456-7890",
@@ -274,7 +274,7 @@ export const exampleResume = {
     { label: "Frameworks", values: "React, Angular, Node.js, Django" },
     { label: "Databases", values: "MySQL, PostgreSQL, MongoDB" },
   ],
-  
+
   projects: [
     {
       title: "E-commerce Website",
@@ -338,7 +338,7 @@ export const exampleResume = {
 export const prompt = {
   resume: ` in formate of ${JSON.stringify(
     userResumeFormate
-  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 bullet points starting with a perfect action word and there should be maximum of 3 skill section and each can have multiple values and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile>`,
+  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and there should be maximum of 3 skill section and each can have multiple values and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the relevance and sort the skills according to their importance for the given job profile`,
 };
 
 // for job profile and company name create a resume using data {} in formate of userResumeFormate and provide the json data and nothing else

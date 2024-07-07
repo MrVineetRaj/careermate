@@ -52,4 +52,38 @@ const updateUserProfile = async (
   });
   return response;
 };
-export { getUser, getUserProfile, updateUserProfile, updateUser };
+
+const createNewResume = async (
+  owner: string,
+  ownerClerkId: string,
+  userResume: any
+) => {
+  const res = await fetch("/api/user-resume", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ owner, ownerClerkId, userResume }),
+  });
+  const response = await res.json();
+  toast({
+    title: response.message,
+    variant: response.type,
+  });
+  return response;
+};
+
+const getUserResume = async (resumeId: string, userId: string) => {
+  const res = await fetch(`/api/user-resume?r=${resumeId}&u=${userId}`);
+  const data = await res.json();
+  
+  return data;
+};
+export {
+  getUser,
+  getUserProfile,
+  updateUserProfile,
+  updateUser,
+  createNewResume,
+  getUserResume,
+};

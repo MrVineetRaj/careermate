@@ -59,7 +59,9 @@ export interface CareerMateStoreProps {
   user_profile_active: userProfileInterface;
   renderKey: number;
   localUser: userSchemaInterface;
+  userResume: UserResumeInterface;
 
+  setUserResume: (userResume: UserResumeInterface) => void;
   setLocalUser: (user: userSchemaInterface) => void;
   updateRenderKey: () => void;
   setUserProfileActive: (user_profile: userProfileInterface) => void;
@@ -112,4 +114,60 @@ export interface projectInterface {
   technologies: string;
   GitHub: string;
   Demo: string;
+}
+
+export interface UserResumeInterface {
+  _id: string;
+  template: string;
+  style: {
+    primaryColor: string;
+    secondaryColor: string;
+    textColor: string;
+    textSize: string;
+    headingSize: string;
+    subHeadingSize: string;
+    smallTextSize: string;
+  };
+  name: string;
+  email: string;
+  phone?: string;
+  location?: string;
+  summary?: string;
+  jobProfile?: string;
+  links: {
+    title?: string;
+    href?: string;
+  }[];
+  skills: {
+    label?: string;
+    values?: string;
+  }[];
+  projects: {
+    title?: string;
+    description?: string[];
+    imageUrl?: string;
+    technologies?: string;
+    GitHub?: string;
+    Demo?: string;
+  }[];
+  experiences: {
+    title?: string;
+    company?: string;
+    location?: string;
+    startDate?: string;
+    endDate?: string;
+    description?: string[];
+  }[];
+  education: {
+    degree?: string;
+    institution?: string;
+    location?: string;
+    startYear?: string;
+    endYear?: string;
+    marks?: string;
+  }[];
+  achievements_Certification: {
+    title?: string;
+    description?: string;
+  }[];
 }

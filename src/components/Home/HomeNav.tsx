@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 const HomeNav = () => {
   const pathName = usePathname();
   if (pathName.includes("/dashboard")) return null;
+  if (pathName.includes("/share")) return null;
 
   return (
     <header className="sticky  z-[10000000] glassmorphism top-0 p-5 flex items-center justify-between">

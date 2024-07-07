@@ -17,14 +17,15 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useCareerMateStore } from "@/store/store";
 import { prompt } from "@/config/constants";
+import { useRouter } from "next/navigation";
 
 const CreateResume = () => {
   const { toast } = useToast();
   const [jobProfile, setJobProfile] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const { user_profile_db } = useCareerMateStore();
+  const { user_profile_db ,setUserResume , localUser} = useCareerMateStore();
   const [isGenerating, setIsGenerating] = useState(false);
-
+  const router = useRouter();
   const createResume = async () => {
     setIsGenerating(true);
     if (jobProfile === "") {
@@ -34,7 +35,6 @@ const CreateResume = () => {
       });
       return;
     }
-    console.log(jobProfile, companyName);
     const userPrompt = `for ${jobProfile} and ${companyName} create a resume using data ${JSON.stringify(
       user_profile_db
     )} ${prompt.resume}`;
@@ -55,7 +55,8 @@ const CreateResume = () => {
           title: data.message,
           variant: data.type,
         });
-        console.log(JSON.parse(data.data));
+        setUserResume(JSON.parse(data.data));
+        router.push("/dashboard/create-resume/edit?r="+localUser._id);
         setIsGenerating(false);
       }
     } catch (error) {
