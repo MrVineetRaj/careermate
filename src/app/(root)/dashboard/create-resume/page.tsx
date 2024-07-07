@@ -1,0 +1,127 @@
+"use client";
+import { Loader, Plus } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { useCareerMateStore } from "@/store/store";
+import { prompt } from "@/config/constants";
+
+const CreateResume = () => {
+  const { toast } = useToast();
+  const [jobProfile, setJobProfile] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const { user_profile_db } = useCareerMateStore();
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const createResume = async () => {
+    setIsGenerating(true);
+    if (jobProfile === "") {
+      toast({
+        title: "Job Profile is required",
+        variant: "error",
+      });
+      return;
+    }
+    console.log(jobProfile, companyName);
+    const userPrompt = `for ${jobProfile} and ${companyName} create a resume using data ${JSON.stringify(
+      user_profile_db
+    )} ${prompt.resume}`;
+    try {
+      const res = await fetch("/api/ai-model", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: userPrompt,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        toast({
+          title: data.message,
+          variant: data.type,
+        });
+        console.log(JSON.parse(data.data));
+        setIsGenerating(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setIsGenerating(false);
+    }
+  };
+  return (
+    <section className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll ">
+      <h1 className="text-grad mb-2 pb-2 border-b-2 border-primary">
+        Create Resume
+      </h1>
+
+      <div className="bg-white px-8 py-4 rounded-lg shadow-lg">
+        <Link
+          href="/dashboard/profile"
+          className="text-grad text-lg font-semibold mb-4"
+        >
+          Complete Your Profile before creating a resume
+        </Link>
+      </div>
+
+      <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
+              <Plus className="w-20 h-20" />
+            </span>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Enter Job Profile and Company Name
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 rounded-md text-black"
+                  placeholder="Job Profile *"
+                  onChange={(e) => setJobProfile(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 rounded-md mt-4 text-black"
+                  placeholder="Company Name "
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              {isGenerating ? (
+                <span>
+                  Generating <Loader className="size-4 animate-spin" />
+                </span>
+              ) : (
+                <span>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <Button onClick={createResume}>Continue</Button>
+                </span>
+              )}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    </section>
+  );
+};
+
+export default CreateResume;
