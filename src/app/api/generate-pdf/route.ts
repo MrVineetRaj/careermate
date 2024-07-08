@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-// import puppeteerCore from "puppeteer-core";
-// import chromium from "@sparticuz/chromium";
+// import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 export async function POST(request: Request) {
   const reqObj = await request.json();
@@ -9,23 +9,23 @@ export async function POST(request: Request) {
   try {
     let browser;
 
-    browser = await puppeteer.launch({
-      headless: false,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: puppeteer.executablePath(),
-    });
-
-    // browser = await puppeteerCore.launch({
-    //   args: chromium.args,
-    //   defaultViewport: chromium.defaultViewport,
-    //   executablePath: await chromium.executablePath(),
-    //   headless: chromium.headless,
+    // browser = await puppeteer.launch({
+    //   headless: false,
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    //   executablePath: puppeteer.executablePath(),
     // });
+
+    browser = await puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
 
     const page = await browser.newPage();
 
     await page.goto(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/share?r=${reqObj.r}&u=${reqObj.u}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/share/resume?r=${reqObj.r}&u=${reqObj.u}`,
       {
         waitUntil: "networkidle0",
       }

@@ -105,6 +105,28 @@ const getUserPortfolio = async (userId: string) => {
   const data = await res.json();
   return data;
 };
+
+const handleFollow = async (data: any) => {
+  const res = await fetch("/api/followers-details", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const response = await res.json();
+  toast({
+    title: response.message,
+    variant: response.type,
+  });
+  return response;
+};
+
+const getUserFollowers = async (userId: string) => {
+  const res = await fetch(`/api/followers-details?u=${userId}`);
+  const data = await res.json();
+  return data;
+};
 export {
   getUser,
   getUserProfile,
@@ -114,4 +136,6 @@ export {
   getUserResume,
   createNewPortfolio,
   getUserPortfolio,
+  handleFollow,
+  getUserFollowers,
 };

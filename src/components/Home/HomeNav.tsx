@@ -13,12 +13,12 @@ import { toast } from "../ui/use-toast";
 
 const HomeNav = () => {
   const pathName = usePathname();
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  
   if (pathName.includes("/dashboard")) return null;
   if (pathName.includes("/share")) return null;
   if (pathName.includes("/portfolio")) return null;
-
-  const [searchInput, setSearchInput] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearchQuery = async () => {
     setIsSearching(true);
@@ -47,7 +47,7 @@ const HomeNav = () => {
               variant: res.type,
             });
             if (res.status === 200) {
-              window.open(`/portfolio?u=${data.data._id}`, "_blank");
+              window.open(`/share/portfolio?u=${data.data._id}`, "_blank");
             }
             setIsSearching(false);
           })

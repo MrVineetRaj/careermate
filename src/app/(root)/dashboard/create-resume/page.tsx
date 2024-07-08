@@ -1,7 +1,7 @@
 "use client";
-import { Loader, Plus } from "lucide-react";
+import { Download, Loader, Plus, Share, Share2, ShareIcon } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,14 +18,31 @@ import { Button } from "@/components/ui/button";
 import { useCareerMateStore } from "@/store/store";
 import { prompt } from "@/config/constants";
 import { useRouter } from "next/navigation";
+import { getUserResume } from "@/config/mongoose/mongoFunction";
+import { downloadResume } from "@/config/OtherApiCalls";
 
 const CreateResume = () => {
   const { toast } = useToast();
   const [jobProfile, setJobProfile] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const { user_profile_db ,setUserResume , localUser} = useCareerMateStore();
+  const { user_profile_db, setUserResume, localUser } = useCareerMateStore();
   const [isGenerating, setIsGenerating] = useState(false);
   const router = useRouter();
+  const [resumes, setResumes] = useState([]);
+
+  useEffect(() => {
+    if (!localUser._id) {
+      router.push("/dashboard");
+    } else if (user_profile_db === null) {
+      router.push("/dashboard/profile");
+    } else {
+      getUserResume("", localUser._id).then((res) => {
+        if (res.status === 200) {
+          setResumes(res.data);
+        }
+      });
+    }
+  }, [localUser._id]);
   const createResume = async () => {
     setIsGenerating(true);
     if (jobProfile === "") {
@@ -56,7 +73,7 @@ const CreateResume = () => {
           variant: data.type,
         });
         setUserResume(JSON.parse(data.data));
-        router.push("/dashboard/create-resume/edit?r="+localUser._id);
+        router.push("/dashboard/create-resume/edit?r=" + localUser._id);
         setIsGenerating(false);
       }
     } catch (error) {
@@ -80,46 +97,89 @@ const CreateResume = () => {
       </div>
 
       <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
-        <AlertDialog>
-          <AlertDialogTrigger>
-            <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
-              <Plus className="w-20 h-20" />
+        {resumes.length < 5 && (
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
+                <Plus className="w-20 h-20" />
+              </span>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Enter Job Profile and Company Name
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 rounded-md text-black"
+                    placeholder="Job Profile *"
+                    onChange={(e) => setJobProfile(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 rounded-md mt-4 text-black"
+                    placeholder="Company Name "
+                    onChange={(e) => setCompanyName(e.target.value)}
+                  />
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                {isGenerating ? (
+                  <span>
+                    Generating <Loader className="size-4 animate-spin" />
+                  </span>
+                ) : (
+                  <span>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <Button onClick={createResume}>Continue</Button>
+                  </span>
+                )}
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
+        {resumes &&
+          resumes.map((item: any, index: number) => (
+            <span
+              className="relative flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5"
+              key={index}
+            >
+              <span className="absolute -top-2 -right-2 flex items-center gap-4">
+                <Download
+                  className="size-4 active:scale-90"
+                  onClick={() => {
+                    toast({
+                      title: "Downloading",
+                      variant: "warning",
+                    });
+                    downloadResume(
+                      item._id,
+                      item.owner,
+                      item.resume.jobProfile
+                    ).then(() => {
+                      toast({
+                        title: "Downloaded",
+                        variant: "success",
+                      });
+                    });
+                  }}
+                />
+
+                <Share2
+                  className="size-4  active:scale-90"
+                  onClick={() => {
+                    window.open(
+                      "/share/resume?r=" + item._id + "&u=" + localUser._id,
+                      "_blank"
+                    );
+                  }}
+                />
+              </span>
+
+              {item.resume.jobProfile}
             </span>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Enter Job Profile and Company Name
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 rounded-md text-black"
-                  placeholder="Job Profile *"
-                  onChange={(e) => setJobProfile(e.target.value)}
-                />
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 rounded-md mt-4 text-black"
-                  placeholder="Company Name "
-                  onChange={(e) => setCompanyName(e.target.value)}
-                />
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              {isGenerating ? (
-                <span>
-                  Generating <Loader className="size-4 animate-spin" />
-                </span>
-              ) : (
-                <span>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <Button onClick={createResume}>Continue</Button>
-                </span>
-              )}
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+          ))}
       </div>
     </section>
   );

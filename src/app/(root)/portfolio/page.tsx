@@ -5,6 +5,7 @@ import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import { getUserPortfolio } from "@/config/mongoose/mongoFunction";
+import Image from "next/image";
 const Portfolio = () => {
   const searchParams = useSearchParams();
   const userId: string = String(searchParams.get("u"));
@@ -32,8 +33,8 @@ const Portfolio = () => {
     experiences: [
       {
         title: "",
-        startDate: "",
-        endDate: "",
+        startYear: "",
+        endYear: "",
         company: "",
         location: "",
         description: [""],
@@ -44,13 +45,16 @@ const Portfolio = () => {
         title: "",
         technologies: "",
         description: [""],
+        imageUrl: "",
+        Github: "",
+        Demo: "",
       },
     ],
     education: [
       {
         degree: "",
-        startDate: "",
-        endDate: "",
+        startYear: "",
+        endYear: "",
         institution: "",
         location: "",
         marks: "",
@@ -66,8 +70,8 @@ const Portfolio = () => {
 
   useEffect(() => {
     getUserPortfolio(userId).then((data) => {
-      // console.log(data);
       setUserPortfolio(data.data.portfolio);
+      console.log(data.data.portfolio.education);
     });
   }, [userId]);
   return (
@@ -130,40 +134,41 @@ const Portfolio = () => {
           ))}
         </ul>
       </div>
-      {userPortfolio?.experiences && (
-        <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
-          <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
-            Experience
-          </h1>
-          <div className="border-l-2 border-l-primary w-full flex flex-col gap-16">
-            {userPortfolio?.experiences.map((experience, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col gap-2  px-8 py-4"
-              >
-                <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
-                <h2 className="text-2xl flex justify-between items-start">
-                  {" "}
-                  <span className="text-grad">{experience?.title} </span>{" "}
+      {userPortfolio?.experiences &&
+        userPortfolio?.experiences.length !== 0 && (
+          <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
+            <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
+              Experience
+            </h1>
+            <div className="border-l-2 border-l-primary w-full flex flex-col gap-16">
+              {userPortfolio?.experiences.map((experience, index) => (
+                <div
+                  key={index}
+                  className="relative flex flex-col gap-2  px-8 py-4"
+                >
+                  <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
+                  <h2 className="text-2xl flex justify-between items-start">
+                    {" "}
+                    <span className="text-grad">{experience?.title} </span>{" "}
+                    <span className="text-xl">
+                      {experience?.startYear} - {experience?.endYear}
+                    </span>
+                  </h2>
                   <span className="text-xl">
-                    {experience?.startDate} - {experience?.endDate}
+                    {experience?.company}, {experience?.location}
                   </span>
-                </h2>
-                <span className="text-xl">
-                  {experience?.company}, {experience?.location}
-                </span>
-                <h3 className="text-2xl text-grad"></h3>
-                <span className="flex flex-col gap-0.5">
-                  {experience?.description?.map((desc, index) => (
-                    <p key={index}>{desc}</p>
-                  ))}
-                </span>
-              </div>
-            ))}
+                  <h3 className="text-2xl text-grad"></h3>
+                  <span className="flex flex-col gap-0.5">
+                    {experience?.description?.map((desc, index) => (
+                      <p key={index}>{desc}</p>
+                    ))}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-      {userPortfolio?.projects && (
+        )}
+      {userPortfolio?.projects && userPortfolio?.projects.length !== 0 && (
         <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
           <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
             Projects
@@ -175,8 +180,8 @@ const Portfolio = () => {
                 className="relative flex flex-col gap-2  px-8 py-4"
               >
                 <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
-                <div className="">
-                  <div className="">
+                <div className="flex gap-2">
+                  <div className="flex-[0.5]">
                     <h2 className="text-2xl flex justify-between items-start">
                       {" "}
                       <span className="text-grad">{project?.title} </span>{" "}
@@ -191,8 +196,12 @@ const Portfolio = () => {
                       ))}
                     </span>
                   </div>
-                  <div className="">
-                    {/* <Image src={experience?.imageUrl} alt={experience?.title} /> */}
+                  <div className="flex-[0.5]">
+                    <img
+                      src={project?.imageUrl}
+                      alt={project?.title}
+                      className="size-full"
+                    />
                   </div>
                 </div>
               </div>
@@ -218,7 +227,7 @@ const Portfolio = () => {
                       {" "}
                       <span className="text-grad">{edu?.degree} </span>{" "}
                       <span className="text-xl">
-                        {edu?.startDate} - {edu?.endDate}
+                        {edu?.startYear} - {edu?.endYear}
                       </span>
                     </h2>
                     <h3 className="text-2xl text-grad"></h3>

@@ -66,9 +66,16 @@ const ResumeSpace = () => {
 
           <div className="mt-4 px-8 ">
             <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
+              Summary
+            </h1>
+            <ul className=" flex justify-between">
+              <p className="text-sm">{userResume?.summary}</p>
+            </ul>
+          </div>
+          <div className="mt-4 px-8 ">
+            <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
               Skills
             </h1>
-
             <ul className=" flex justify-between">
               {userResume?.skills?.map((skill: any, index: number) => (
                 <div className="flex-[0.33] " key={index}>
@@ -157,7 +164,7 @@ const ResumeSpace = () => {
             <ul className=" justify-between w-full">
               {userResume?.achievements_Certification?.map(
                 (achievement: any, index: number) => (
-                  <div className="w-full ">
+                  <div className="w-full " key={index}>
                     <p className="font-semibold text-black">
                       {achievement.title}
                     </p>

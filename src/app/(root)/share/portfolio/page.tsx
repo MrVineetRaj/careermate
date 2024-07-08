@@ -1,9 +1,119 @@
-import React from "react";
-import { userPortfolio } from "@/config/constants";
-import Image from "next/image";
+"use client";
+import React, { useEffect, useState } from "react";
+
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-const EditPortfolio = () => {
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  getUserFollowers,
+  getUserPortfolio,
+  handleFollow,
+} from "@/config/mongoose/mongoFunction";
+import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "@/components/ui/use-toast";
+const Portfolio = () => {
+  const { user, isSignedIn } = useUser();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const userId: string = String(searchParams.get("u"));
+  const [userPortfolio, setUserPortfolio] = useState({
+    name: "",
+    jobProfile: "",
+    summary: "",
+    Contact: {
+      email: "",
+      links: [
+        {
+          href: "",
+          title: "",
+        },
+      ],
+    },
+    imageUrl: "",
+    about: "",
+    skills: [
+      {
+        label: "",
+        values: "",
+      },
+    ],
+    experiences: [
+      {
+        title: "",
+        startYear: "",
+        endYear: "",
+        company: "",
+        location: "",
+        description: [""],
+      },
+    ],
+    projects: [
+      {
+        title: "",
+        technologies: "",
+        description: [""],
+        imageUrl: "",
+        Github: "",
+        Demo: "",
+      },
+    ],
+    education: [
+      {
+        degree: "",
+        startYear: "",
+        endYear: "",
+        institution: "",
+        location: "",
+        marks: "",
+      },
+    ],
+    achievements_certification: [
+      {
+        title: "",
+        description: "",
+      },
+    ],
+  });
+
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  useEffect(() => {
+    getUserPortfolio(userId).then((data) => {
+      setUserPortfolio(data.data.portfolio);
+      console.log(data.data.portfolio.education);
+    });
+    getUserFollowers(userId).then((data) => {
+      setFollowers(data.data.followers);
+      setFollowing(data.data.following);
+    });
+  }, [userId]);
+
+  const handleFollowClient = async () => {
+    if (!isSignedIn) {
+      toast({
+        title: "Please Sign In to Follow ",
+        variant: "error",
+      });
+      router.push("/sign-in?redirect=/share/portfolio?u=" + userId);
+      return;
+    }
+    const data = {
+      userId: user.id,
+      userName: user.emailAddresses[0].emailAddress.split("@")[0],
+      imageUrl: userPortfolio.imageUrl,
+      ownerId: userId,
+    };
+    const response = await handleFollow(data);
+    if (response.status === 200) {
+      toast({
+        title: response.message,
+        variant: response.type,
+      });
+    }
+  };
+
   return (
     <section
       className="h-[100vh] overflow-scroll pb-36 flex flex-col  items-center px-4 sm:px-8 lg:px-16"
@@ -30,11 +140,25 @@ const EditPortfolio = () => {
             ))}
           </div>
           <div className="flex gap-2 mt-4">
-            <p className="flex gap-2 items-center">
-              <User className="size-5" />
-              233 followers
-            </p>
-            <Button className="bg-grad active:scale-90">Follow</Button>
+            <span>
+              <p className="flex gap-2 items-center">
+                <User className="size-5" />
+                {followers} followers
+              </p>
+              <p className="flex gap-2 items-center">
+                <User className="size-5" />
+                {following} following
+              </p>
+            </span>
+
+            <Button
+              className="bg-grad active:scale-90"
+              onClick={() => {
+                handleFollowClient();
+              }}
+            >
+              Follow
+            </Button>
           </div>
         </div>
         <div className="">
@@ -53,7 +177,7 @@ const EditPortfolio = () => {
       </div>
       <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start mt-16">
         <h1 className="text-5xl text-grad w-full text-left mt-24 mb-4 border-b-primary border-b">
-          {"What's in my Sleeve"}
+          What's in my Sleeve
         </h1>
         <ul className=" list-inside mt-4">
           {userPortfolio?.skills.map((skill, index) => (
@@ -64,40 +188,41 @@ const EditPortfolio = () => {
           ))}
         </ul>
       </div>
-      {userPortfolio?.experiences && (
-        <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
-          <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
-            Experience
-          </h1>
-          <div className="border-l-2 border-l-primary w-full flex flex-col gap-16">
-            {userPortfolio?.experiences.map((experience, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col gap-2  px-8 py-4"
-              >
-                <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
-                <h2 className="text-2xl flex justify-between items-start">
-                  {" "}
-                  <span className="text-grad">{experience?.title} </span>{" "}
+      {userPortfolio?.experiences &&
+        userPortfolio?.experiences.length !== 0 && (
+          <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
+            <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
+              Experience
+            </h1>
+            <div className="border-l-2 border-l-primary w-full flex flex-col gap-16">
+              {userPortfolio?.experiences.map((experience, index) => (
+                <div
+                  key={index}
+                  className="relative flex flex-col gap-2  px-8 py-4"
+                >
+                  <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
+                  <h2 className="text-2xl flex justify-between items-start">
+                    {" "}
+                    <span className="text-grad">{experience?.title} </span>{" "}
+                    <span className="text-xl">
+                      {experience?.startYear} - {experience?.endYear}
+                    </span>
+                  </h2>
                   <span className="text-xl">
-                    {experience?.startDate} - {experience?.endDate}
+                    {experience?.company}, {experience?.location}
                   </span>
-                </h2>
-                <span className="text-xl">
-                  {experience?.company}, {experience?.location}
-                </span>
-                <h3 className="text-2xl text-grad"></h3>
-                <span className="flex flex-col gap-0.5">
-                  {experience?.description?.map((desc, index) => (
-                    <p key={index}>{desc}</p>
-                  ))}
-                </span>
-              </div>
-            ))}
+                  <h3 className="text-2xl text-grad"></h3>
+                  <span className="flex flex-col gap-0.5">
+                    {experience?.description?.map((desc, index) => (
+                      <p key={index}>{desc}</p>
+                    ))}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-      {userPortfolio?.projects && (
+        )}
+      {userPortfolio?.projects && userPortfolio?.projects.length !== 0 && (
         <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start ">
           <h1 className="text-5xl text-grad w-full text-left mt-24 mb-16 border-b-primary border-b">
             Projects
@@ -109,8 +234,8 @@ const EditPortfolio = () => {
                 className="relative flex flex-col gap-2  px-8 py-4"
               >
                 <div className="absolute -top-4 -left-2 size-4 bg-grad rounded-full"></div>
-                <div className="">
-                  <div className="">
+                <div className="flex gap-2">
+                  <div className="flex-[0.5]">
                     <h2 className="text-2xl flex justify-between items-start">
                       {" "}
                       <span className="text-grad">{project?.title} </span>{" "}
@@ -125,8 +250,12 @@ const EditPortfolio = () => {
                       ))}
                     </span>
                   </div>
-                  <div className="">
-                    {/* <Image src={experience?.imageUrl} alt={experience?.title} /> */}
+                  <div className="flex-[0.5]">
+                    <img
+                      src={project?.imageUrl}
+                      alt={project?.title}
+                      className="size-full"
+                    />
                   </div>
                 </div>
               </div>
@@ -152,7 +281,7 @@ const EditPortfolio = () => {
                       {" "}
                       <span className="text-grad">{edu?.degree} </span>{" "}
                       <span className="text-xl">
-                        {edu?.startDate} - {edu?.endDate}
+                        {edu?.startYear} - {edu?.endYear}
                       </span>
                     </h2>
                     <h3 className="text-2xl text-grad"></h3>
@@ -204,4 +333,4 @@ const EditPortfolio = () => {
   );
 };
 
-export default EditPortfolio;
+export default Portfolio;

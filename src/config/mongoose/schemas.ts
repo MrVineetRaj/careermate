@@ -226,6 +226,27 @@ const userPortfolioSchema = new mongoose.Schema({
   },
 });
 
+const followersDetailsSchema = new mongoose.Schema({
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  ownerClerkId: { type: String, required: true },
+  followers: [
+    {
+      userId: { type: String, required: false },
+      userName: { type: String, required: false },
+      email: { type: String, required: false },
+      imageUrl: { type: String, required: false },
+    },
+  ],
+  following: [
+    {
+      userId: { type: String, required: false },
+      userName: { type: String, required: false },
+      email: { type: String, required: false },
+      imageUrl: { type: String, required: false },
+    },
+  ],
+});
+
 let User: any;
 try {
   User = mongoose.model("User");
@@ -254,4 +275,11 @@ try {
   UserPortfolio = mongoose.model("UserPortfolio", userPortfolioSchema);
 }
 
-export { User, UserProfile, UserResume, UserPortfolio };
+let FollowersDetails: any;
+try {
+  FollowersDetails = mongoose.model("FollowersDetails");
+} catch {
+  FollowersDetails = mongoose.model("FollowersDetails", followersDetailsSchema);
+}
+
+export { User, UserProfile, UserResume, UserPortfolio, FollowersDetails };
