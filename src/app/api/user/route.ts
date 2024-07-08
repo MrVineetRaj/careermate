@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const clerkId = searchParams.get("r") || "";
   const userName = searchParams.get("n") || "";
 
-  console.log("Here", clerkId, userName);
+  
   if (userName !== "") {
     try {
       await connectDB();

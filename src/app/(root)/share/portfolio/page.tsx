@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "@/components/ui/use-toast";
+import { useCareerMateStore } from "@/store/store";
 const Portfolio = () => {
   const { user, isSignedIn } = useUser();
   const searchParams = useSearchParams();
@@ -79,13 +80,14 @@ const Portfolio = () => {
 
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const { renderKey, updateRenderKey } = useCareerMateStore();
   useEffect(() => {
     getUserPortfolio(userId).then((data) => {
       setUserPortfolio(data.data.portfolio);
       console.log(data.data.portfolio.education);
     });
     getUserFollowers(userId).then((data) => {
-      console.log(data.data.followers, data.data.following);
+      console.log(data.data.followers.length);
       setFollowers(data.data.followers);
       setFollowing(data.data.following);
     });
@@ -104,22 +106,26 @@ const Portfolio = () => {
       email: user.emailAddresses[0].emailAddress,
       userId: user.id,
       userName: user.emailAddresses[0].emailAddress.split("@")[0],
-      imageUrl: userPortfolio.imageUrl,
+      imageUrl: user.imageUrl,
       ownerId: userId,
     };
-    const response = await handleFollow(data);
-    if (response.status === 200) {
+    handleFollow(data).then((response) => {
+      if (response.type === "success") {
+        updateRenderKey();
+        console.log(renderKey)
+      }
       toast({
         title: response.message,
         variant: response.type,
       });
-    }
+    });
   };
 
   return (
     <section
       className="h-[100vh] overflow-scroll pb-36 flex flex-col  items-center px-4 sm:px-8 lg:px-16"
       style={{ scrollbarWidth: "thin" }}
+      key={renderKey}
     >
       <div className="flex w-[90%] md:w-[80%] xl:w-[75%]  min-h-[70vh] justify-around items-center gap-20 ">
         <div className="">
@@ -141,20 +147,20 @@ const Portfolio = () => {
               </a>
             ))}
           </div>
-          <div className="flex gap-2 mt-4">
-            <span>
+          <div className="flex flex-col gap-2 mt-4">
+            <span className="flex gap-4">
               <p className="flex gap-2 items-center">
                 <User className="size-5" />
-                {followers} followers
+                {followers.length} followers
               </p>
               <p className="flex gap-2 items-center">
                 <User className="size-5" />
-                {following} following
+                {following.length} following
               </p>
             </span>
 
             <Button
-              className="bg-grad active:scale-90"
+              className="bg-grad active:scale-90 max-w-[150px]"
               onClick={() => {
                 handleFollowClient();
               }}

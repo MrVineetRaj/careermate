@@ -52,6 +52,7 @@ export async function GET(req: Request) {
       status: 200,
       type: "success",
     });
+
   } catch (error: any) {
     return NextResponse.json({
       message: error.message,

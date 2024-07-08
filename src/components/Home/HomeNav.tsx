@@ -15,7 +15,7 @@ const HomeNav = () => {
   const pathName = usePathname();
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  
+
   if (pathName.includes("/dashboard")) return null;
   if (pathName.includes("/share")) return null;
   if (pathName.includes("/portfolio")) return null;
@@ -40,24 +40,33 @@ const HomeNav = () => {
           title: "User found",
           variant: "success",
         });
-        getUserPortfolio(data.data._id)
-          .then((res) => {
-            toast({
-              title: res.message,
-              variant: res.type,
-            });
-            if (res.status === 200) {
-              window.open(`/share/portfolio?u=${data.data._id}`, "_blank");
-            }
-            setIsSearching(false);
-          })
-          .catch((err) => {
-            toast({
-              title: "Portfolio not found",
-              variant: "error",
-            });
-            setIsSearching(false);
+        if (data.data.profileType === "Private") {
+          toast({
+            title: "User is private",
+            variant: "warning",
           });
+          setIsSearching(false);
+          return;
+        } else {
+          getUserPortfolio(data.data._id)
+            .then((res) => {
+              toast({
+                title: res.message,
+                variant: res.type,
+              });
+              if (res.status === 200) {
+                window.open(`/share/portfolio?u=${data.data._id}`, "_blank");
+              }
+              setIsSearching(false);
+            })
+            .catch((err) => {
+              toast({
+                title: "Portfolio not found",
+                variant: "error",
+              });
+              setIsSearching(false);
+            });
+        }
       }
     }
   };
