@@ -179,7 +179,7 @@ const Portfolio = () => {
       </div>
       <div className="flex flex-col w-[90%] md:w-[80%] xl:w-[75%]   items-start mt-16">
         <h1 className="text-5xl text-grad w-full text-left mt-24 mb-4 border-b-primary border-b">
-          What's in my Sleeve
+          {"What's"} in my Sleeve
         </h1>
         <ul className=" list-inside mt-4">
           {userPortfolio?.skills.map((skill, index) => (
