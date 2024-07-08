@@ -85,6 +85,7 @@ const Portfolio = () => {
       console.log(data.data.portfolio.education);
     });
     getUserFollowers(userId).then((data) => {
+      console.log(data.data.followers, data.data.following);
       setFollowers(data.data.followers);
       setFollowing(data.data.following);
     });
@@ -100,6 +101,7 @@ const Portfolio = () => {
       return;
     }
     const data = {
+      email: user.emailAddresses[0].emailAddress,
       userId: user.id,
       userName: user.emailAddresses[0].emailAddress.split("@")[0],
       imageUrl: userPortfolio.imageUrl,

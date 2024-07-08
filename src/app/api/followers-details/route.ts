@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
   const data = await req.json();
-  const { userId, userName, imageUrl, ownerId } = data;
+  const { email, userId, userName, imageUrl, ownerId } = data;
 
   try {
     const followersDetails = await FollowersDetails.findOne({
@@ -16,6 +16,7 @@ export async function PATCH(req: Request) {
 
     if (tempFollowers.length === followersDetails.followers.length) {
       followersDetails.followers.push({
+        email,
         userId,
         userName,
         imageUrl,

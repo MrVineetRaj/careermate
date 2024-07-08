@@ -1,5 +1,5 @@
 import { connectDB } from "@/config/mongoose/connect-dv";
-import { User, UserProfile } from "@/config/mongoose/schemas";
+import { FollowersDetails, User, UserProfile } from "@/config/mongoose/schemas";
 import { clerkClient } from "@clerk/nextjs/server";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
@@ -81,8 +81,16 @@ export async function POST(req: Request) {
       });
 
       await userProfile.save();
+      const userFollowers = new FollowersDetails({
+        owner: user._id,
+        ownerClerkId: user.clerkId,
+        followers: [],
+        following: [],
+      });
 
+      await userFollowers.save();
       responseId = user._id;
+
     } catch (error) {
       console.error("Error creating user:", error);
       return NextResponse.json({
