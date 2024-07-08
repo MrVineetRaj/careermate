@@ -89,8 +89,7 @@ export async function POST(req: Request) {
       });
 
       await userFollowers.save();
-      responseId = user._id;
-
+      responseId = user._id;   
     } catch (error) {
       console.error("Error creating user:", error);
       return NextResponse.json({

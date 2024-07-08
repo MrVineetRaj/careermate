@@ -97,7 +97,7 @@ const CreateResume = () => {
       </div>
 
       <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
-        {resumes.length < 5 && (
+        {resumes && resumes?.length < 5 && (
           <AlertDialog>
             <AlertDialogTrigger>
               <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
@@ -140,7 +140,7 @@ const CreateResume = () => {
           </AlertDialog>
         )}
         {resumes &&
-          resumes.map((item: any, index: number) => (
+          resumes?.map((item: any, index: number) => (
             <span
               className="relative flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5"
               key={index}

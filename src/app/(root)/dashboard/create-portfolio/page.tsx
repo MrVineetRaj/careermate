@@ -120,7 +120,7 @@ const CreatePortfolio = () => {
         </Link>
       </div>
       <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
-        {!portfolio ? (
+        {portfolio.jobProfile === "" ? (
           <AlertDialog>
             <AlertDialogTrigger>
               <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
