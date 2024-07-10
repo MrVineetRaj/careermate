@@ -36,6 +36,7 @@ const CreateResume = () => {
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
 
+
   useEffect(() => {
     if (!localUser._id) {
       router.push("/dashboard");
@@ -43,6 +44,8 @@ const CreateResume = () => {
       router.push("/dashboard/profile");
     } else {
       getUserResume("", localUser._id).then((res) => {
+        console.log(res);
+        console.log(localUser._id);
         if (res.status === 200) {
           setResumes(res.data);
           console.log(res.data);

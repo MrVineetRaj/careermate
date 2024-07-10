@@ -24,7 +24,7 @@ const DisplayContacts = ({
     tempProfile.phone = phone;
     tempProfile.location = address;
     setUserProfileActive(tempProfile);
-    console.log(renderKey);
+    
   };
 
   const handleDeleteLink = ({ title }: { title: string }) => {
@@ -44,7 +44,7 @@ const DisplayContacts = ({
     });
 
     setUserProfileActive(tempProfile);
-    console.log(renderKey);
+    
   };
 
   return (

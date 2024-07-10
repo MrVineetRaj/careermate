@@ -10,7 +10,7 @@ cloudinary.config({
 export async function POST(req: Request) {
   const data = await req.json();
   const { publicId } = data;
-  console.log(data);
+  
   try {
     await cloudinary.uploader.destroy(publicId);
     return NextResponse.json({

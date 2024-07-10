@@ -8,13 +8,11 @@ export async function POST(request: Request) {
 
   try {
     let browser;
-
     // browser = await puppeteer.launch({
     //   headless: true,
     //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     //   executablePath: puppeteer.executablePath(),
     // });
-
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,

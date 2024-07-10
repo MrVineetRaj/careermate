@@ -45,7 +45,7 @@ const updateUserProfile = async (
     body: JSON.stringify(data),
   });
   const response = await res.json();
-  console.log(response.data);
+  
   toast({
     title: response.message,
     variant: response.type,

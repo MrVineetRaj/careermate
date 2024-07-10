@@ -19,7 +19,7 @@ const ResumeSpace = () => {
     if (!isSignedIn) {
       return;
     }
-    console.log(userResume);
+    
     createNewResume(localUser._id, user.id, userResume)
       .then((data) => {
         downloadResume(

@@ -22,7 +22,7 @@ const SharedResume = () => {
 
   useEffect(() => {
     getUserResume(resumeId, userId).then((data) => {
-      console.log(data.data.resume);
+      
       setUserResume(data.data.resume);
     });
   }, []);

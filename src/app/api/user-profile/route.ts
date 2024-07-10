@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     await connectDB();
     const userProfile = await UserProfile.findOne({ owner: userId });
 
-    console.log(userProfile);
+    
     if (userProfile?.ownerClerkId !== clerkId) {
       return NextResponse.json({
         message: "User profile not found , Contact Admin",

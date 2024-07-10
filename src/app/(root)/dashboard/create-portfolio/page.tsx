@@ -51,7 +51,7 @@ const CreatePortfolio = () => {
     } else {
       getUserPortfolio(localUser._id).then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          
           setPortfolio(res.data.portfolio);
         }
       });

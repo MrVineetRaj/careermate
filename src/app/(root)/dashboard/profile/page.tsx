@@ -43,7 +43,7 @@ const Profile = () => {
       let clerkId = user.id;
       let userId: string = String(searchParams.get("r"));
       getUserProfile(clerkId, userId).then((data) => {
-        console.log(data);
+        
         if (data.status === 200) {
           updateUserProfileDb(data.data);
           updateRenderKey();
@@ -66,7 +66,7 @@ const Profile = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        
         setIsSaving(false);
       });
   };

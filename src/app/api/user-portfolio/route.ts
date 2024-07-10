@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const data = await req.json();
   const { owner, ownerClerkId, userPortfolio } = data;
 
-  console.log(data);
+  
   try {
     await connectDB();
     const newUserPortfolio = new UserPortfolio({

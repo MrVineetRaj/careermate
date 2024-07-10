@@ -27,7 +27,7 @@ const HomeNav = () => {
       const userName = searchInput.trim().slice(1);
       const res = await fetch(`/api/user?n=` + userName);
       const data = await res.json();
-      console.log(data);
+      
       if (data.status != 200) {
         toast({
           title: data.message,
@@ -82,7 +82,7 @@ const HomeNav = () => {
         <span className="flex gap-2 items-center">
           <Input
             onChange={(e) => {
-              console.log(e.target.value);
+              
               setSearchInput(e.target.value);
             }}
           />

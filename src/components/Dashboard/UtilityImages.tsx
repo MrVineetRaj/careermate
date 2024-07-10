@@ -25,7 +25,6 @@ const UtilityImages = () => {
   const { user, isSignedIn } = useUser();
   const [isUploading, setIsUploading] = useState(false);
   const handleImageStore = async (file: any) => {
-    
     setIsUploading(true);
     if (!isSignedIn || !user) {
       console.error("User is not signed in");
@@ -42,7 +41,7 @@ const UtilityImages = () => {
     });
 
     response.json().then((res) => {
-      console.log(res.data);
+      res.data;
 
       let tempLocalUser = localUser;
       tempLocalUser.utilityImages.push(res.data);
@@ -89,7 +88,7 @@ const UtilityImages = () => {
         setIsUploading(false);
       })
       .catch((e: any) => {
-        console.log(e.message);
+        e.message;
         setIsUploading(false);
         return;
       });
@@ -136,7 +135,7 @@ const UtilityImages = () => {
           <SheetDescription>
             <span className="w-full h-[60svh] flex flex-col gap-8 mt-8 mb-16 pt-8 overflow-y-scroll justify-start items-center">
               {localUser?.utilityImages?.map((image, index) => (
-                <span className="relative " key = {index}>
+                <span className="relative " key={index}>
                   <span className="absolute -top-2 -right-2">
                     <Trash
                       className="size-4 active:scale-90 text-red-500"

@@ -50,7 +50,7 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get("u");
   
-  console.log(userId);
+  
   try {
     const followersDetails = await FollowersDetails.findOne({
       owner: userId,

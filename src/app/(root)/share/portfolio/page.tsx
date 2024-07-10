@@ -84,10 +84,10 @@ const Portfolio = () => {
   useEffect(() => {
     getUserPortfolio(userId).then((data) => {
       setUserPortfolio(data.data.portfolio);
-      console.log(data.data.portfolio.education);
+      
     });
     getUserFollowers(userId).then((data) => {
-      console.log(data.data.followers.length);
+      
       setFollowers(data.data.followers);
       setFollowing(data.data.following);
     });
@@ -112,7 +112,7 @@ const Portfolio = () => {
     handleFollow(data).then((response) => {
       if (response.type === "success") {
         updateRenderKey();
-        console.log(renderKey)
+        
       }
       toast({
         title: response.message,

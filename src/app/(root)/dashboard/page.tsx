@@ -51,7 +51,6 @@ const Dashboard = () => {
               let clerkId = user.id;
               let userId: string = String(data.data._id);
               getUserProfile(clerkId, userId).then((data) => {
-                console.log(data);
                 if (data.status === 200) {
                   updateUserProfileDb(data.data);
                   updateRenderKey();

@@ -40,7 +40,7 @@ export const AddNewSkill = ({
     }
 
     handleAddSkill({ label, values });
-    console.log(label, values);
+    
   };
 
   return (
@@ -90,7 +90,7 @@ const EditSkill = () => {
       });
       return;
     }
-    console.log(Label, values);
+    
   };
   return (
     <div>
