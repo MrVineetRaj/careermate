@@ -25,7 +25,13 @@ const CreateResume = () => {
   const { toast } = useToast();
   const [jobProfile, setJobProfile] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const { user_profile_db, setUserResume, localUser } = useCareerMateStore();
+  const {
+    user_profile_db,
+    setUserResume,
+    localUser,
+    renderKey,
+    updateRenderKey,
+  } = useCareerMateStore();
   const [isGenerating, setIsGenerating] = useState(false);
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
@@ -39,6 +45,8 @@ const CreateResume = () => {
       getUserResume("", localUser._id).then((res) => {
         if (res.status === 200) {
           setResumes(res.data);
+          console.log(res.data);
+          updateRenderKey();
         }
       });
     }
@@ -82,7 +90,10 @@ const CreateResume = () => {
     }
   };
   return (
-    <section className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll ">
+    <section
+      className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll "
+      key={renderKey}
+    >
       <h1 className="text-grad mb-2 pb-2 border-b-2 border-primary">
         Create Resume
       </h1>

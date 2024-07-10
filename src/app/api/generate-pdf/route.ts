@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-// import puppeteer from "puppeteer-core";
-// import chromium from "@sparticuz/chromium";
+// import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 export async function POST(request: Request) {
   const reqObj = await request.json();
@@ -9,18 +9,18 @@ export async function POST(request: Request) {
   try {
     let browser;
 
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: puppeteer.executablePath(),
-    });
-
     // browser = await puppeteer.launch({
-    //   args: chromium.args,
-    //   defaultViewport: chromium.defaultViewport,
-    //   executablePath: await chromium.executablePath(),
-    //   headless: chromium.headless,
+    //   headless: true,
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    //   executablePath: puppeteer.executablePath(),
     // });
+
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
 
     const page = await browser.newPage();
 
