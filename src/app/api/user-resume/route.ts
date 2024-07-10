@@ -21,6 +21,7 @@ export async function POST(req: Request) {
       type: "success",
     });
   } catch (error: any) {
+    console.error("Error in POST:", error);
     return NextResponse.json({
       status: 500,
       message: error.message,
@@ -34,49 +35,68 @@ export async function GET(req: Request) {
   const resumeId = searchParams.get("r");
   const userId = searchParams.get("u");
 
-  if (resumeId === "" && userId === "") {
+  if (!resumeId && !userId) {
     return NextResponse.json({
       message: "Invalid Request",
       status: 400,
       type: "error",
     });
-  } else if (resumeId === "" && userId !== "") {
-    await connectDB();
-    const userResumes = await UserResume.find({ owner: userId });
+  } else if (!resumeId && userId) {
+    try {
+      await connectDB();
+      const userResumes = await UserResume.find({ owner: userId });
 
-    if (userResumes.length === 0) {
+      if (userResumes.length === 0) {
+        return NextResponse.json({
+          message: "No resumes found",
+          status: 404,
+          type: "success",
+        });
+      }
+
       return NextResponse.json({
-        message: "No resumes found",
-        status: 404,
+        data: userResumes,
+        message: "Resumes found",
+        status: 200,
         type: "success",
       });
+    } catch (error: any) {
+      console.error("Error in GET user resumes:", error);
+      return NextResponse.json({
+        message: error.message,
+        status: 500,
+        type: "error",
+      });
     }
-    
-    return NextResponse.json({
-      data: userResumes,
-      message: "Resumes found",
-      status: 200,
-      type: "success",
-    });
-  }
-  try {
-    await connectDB();
-    const userResume = await UserResume.findOne({
-      owner: userId,
-      _id: resumeId,
-    });
+  } else {
+    try {
+      await connectDB();
+      const userResume = await UserResume.findOne({
+        owner: userId,
+        _id: resumeId,
+      });
 
-    return NextResponse.json({
-      message: "Resume found",
-      data: userResume,
-      status: 200,
-      type: "success",
-    });
-  } catch (error: any) {
-    return NextResponse.json({
-      message: error.message,
-      status: 500,
-      type: "error",
-    });
+      if (!userResume) {
+        return NextResponse.json({
+          message: "Resume not found",
+          status: 404,
+          type: "error",
+        });
+      }
+
+      return NextResponse.json({
+        message: "Resume found",
+        data: userResume,
+        status: 200,
+        type: "success",
+      });
+    } catch (error: any) {
+      console.error("Error in GET resume by ID:", error);
+      return NextResponse.json({
+        message: error.message,
+        status: 500,
+        type: "error",
+      });
+    }
   }
 }
