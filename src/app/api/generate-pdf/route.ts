@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 // import puppeteer from "puppeteer";
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
 export async function POST(request: Request) {
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     //   executablePath: puppeteer.executablePath(),
     // });
-    browser = await puppeteer.launch({
+    browser = await puppeteerCore.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
