@@ -44,7 +44,6 @@ export async function GET(req: Request) {
     await connectDB();
     const userResumes = await UserResume.find({ owner: userId });
 
-
     if (userResumes.length === 0) {
       return NextResponse.json({
         message: "No resumes found",

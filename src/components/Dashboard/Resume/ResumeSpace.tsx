@@ -48,7 +48,7 @@ const ResumeSpace = () => {
         </Button>
       </div>
       <div className="size-full overflow-y-scroll flex justify-center">
-        <div className="mt-36 w-[210mm] h-[297mm] bg-white text-gray-500 ">
+        <div className="mt-36 w-[210mm] min-h-[297mm] bg-white text-gray-500 ">
           <div className="bg-black p-8">
             <h1 className="text-[34pt] font-extrabold text-orange-500">
               {userResume?.name}
@@ -64,16 +64,16 @@ const ResumeSpace = () => {
             </p>
           </div>
 
-          <div className="mt-4 px-8 ">
-            <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
+          <div className="mt-2 px-8 ">
+            <h1 className="text-lg border-b-2 border-orange-500 text-orange-500">
               Summary
             </h1>
             <ul className=" flex justify-between">
               <p className="text-sm">{userResume?.summary}</p>
             </ul>
           </div>
-          <div className="mt-4 px-8 ">
-            <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
+          <div className="mt-1 px-8 ">
+            <h1 className="text-lg border-b-2 border-orange-500 text-orange-500">
               Skills
             </h1>
             <ul className=" flex justify-between">
@@ -84,12 +84,12 @@ const ResumeSpace = () => {
                 </div>
               ))}
             </ul>
-            <h1 className="text-lg mt-4 border-b-2  font-bold border-orange-500 text-orange-500">
+            <h1 className="text-lg mt-1 border-b-2  font-bold border-orange-500 text-orange-500">
               Projects
             </h1>
             <ul className=" flex flex-col justify-between">
               {userResume?.projects?.map((project: any, index: number) => (
-                <div className="mt-4" key={index}>
+                <div className="mt-1" key={index}>
                   <p className="font-semibold text-black flex justify-between items-start border-b">
                     <span>{project.title}</span>{" "}
                     <span>
@@ -132,7 +132,7 @@ const ResumeSpace = () => {
               ))}
             </ul>
 
-            <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
+            <h1 className="text-lg mt-1 border-b-2 border-orange-500 text-orange-500">
               Education
             </h1>
 
@@ -157,7 +157,7 @@ const ResumeSpace = () => {
               ))}
             </ul>
 
-            <h1 className="text-lg mt-4 border-b-2 border-orange-500 text-orange-500">
+            <h1 className="text-lg mt-1 border-b-2 border-orange-500 text-orange-500">
               Achievements and Certifications
             </h1>
 

@@ -76,7 +76,7 @@ const createNewResume = async (
 const getUserResume = async (resumeId: string, userId: string) => {
   const res = await fetch(`/api/user-resume?r=${resumeId}&u=${userId}`);
   const data = await res.json();
-
+  
   return data;
 };
 

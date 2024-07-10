@@ -97,48 +97,47 @@ const CreateResume = () => {
       </div>
 
       <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
-        {resumes && resumes?.length < 5 && (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
-                <Plus className="w-20 h-20" />
-              </span>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Enter Job Profile and Company Name
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 rounded-md text-black"
-                    placeholder="Job Profile *"
-                    onChange={(e) => setJobProfile(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 rounded-md mt-4 text-black"
-                    placeholder="Company Name "
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                {isGenerating ? (
-                  <span>
-                    Generating <Loader className="size-4 animate-spin" />
-                  </span>
-                ) : (
-                  <span>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <Button onClick={createResume}>Continue</Button>
-                  </span>
-                )}
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
+              <Plus className="w-20 h-20" />
+            </span>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Enter Job Profile and Company Name
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 rounded-md text-black"
+                  placeholder="Job Profile *"
+                  onChange={(e) => setJobProfile(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 rounded-md mt-4 text-black"
+                  placeholder="Company Name "
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              {isGenerating ? (
+                <span>
+                  Generating <Loader className="size-4 animate-spin" />
+                </span>
+              ) : (
+                <span>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <Button onClick={createResume}>Continue</Button>
+                </span>
+              )}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         {resumes &&
           resumes?.map((item: any, index: number) => (
             <span
