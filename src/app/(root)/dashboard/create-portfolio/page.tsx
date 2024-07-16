@@ -39,7 +39,10 @@ const CreatePortfolio = () => {
   const [imageUrl, setImageUrl] = useState("");
   const { localUser, user_profile_db } = useCareerMateStore();
   const [portfolio, setPortfolio] = useState({
-    jobProfile: "",
+    _id: "",
+    portfolio: {
+      jobProfile: "",
+    },
   });
   const router = useRouter();
 
@@ -49,10 +52,10 @@ const CreatePortfolio = () => {
     } else if (user_profile_db === null) {
       router.push("/dashboard/profile");
     } else {
-      getUserPortfolio(localUser._id).then((res) => {
+      getUserPortfolio(localUser._id, "", localUser.clerkId).then((res) => {
+        // console.log(res.data.portfolio);
         if (res.status === 200) {
-          
-          setPortfolio(res.data.portfolio);
+          setPortfolio(res.data);
         }
       });
     }
@@ -120,81 +123,82 @@ const CreatePortfolio = () => {
         </Link>
       </div>
       <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
-        {portfolio.jobProfile === "" ? (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
-                <Plus className="w-20 h-20" />
-              </span>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Enter Job Profile and select your profile picture
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 rounded-md text-black"
-                    placeholder="Job Profile *"
-                    onChange={(e) => setJobProfile(e.target.value)}
-                  />
-                  <Select onValueChange={(value) => setImageUrl(value)}>
-                    <SelectTrigger className="w-full overflow-hidden bg-white my-4 flex justify-center">
-                      <SelectValue
-                        placeholder="Theme"
-                        className="overflow-hidden bg-white"
-                      />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {localUser?.utilityImages?.map((image, index) => (
-                        <SelectItem value={`${image.url}`} key={index}>
-                          <Image
-                            src={`${image.url}`}
-                            alt="image"
-                            width={200}
-                            height={200}
-                          />
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                    {imageUrl && (
-                      <img
-                        src={`${imageUrl}`}
-                        alt="image"
-                        className="w-full h-auto mt-4"
-                      />
-                    )}
-                  </Select>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                {isGenerating ? (
-                  <span>
-                    Generating <Loader className="size-4 animate-spin" />
-                  </span>
-                ) : (
-                  <span>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <Button onClick={createPortfolio}>Continue</Button>
-                  </span>
-                )}
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        ) : (
-          <span className="relative selection:flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5">
-            <span className="absolute -top-2 -right-2 flex items-center gap-4">
-              <Share2
-                className="size-4  active:scale-90"
-                onClick={() => {
-                  window.open("/share/portfolio?u=" + localUser._id, "_blank");
-                }}
-              />
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
+              <Plus className="w-20 h-20" />
             </span>
-            {portfolio?.jobProfile}
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Enter Job Profile and select your profile picture
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 rounded-md text-black"
+                  placeholder="Job Profile *"
+                  onChange={(e) => setJobProfile(e.target.value)}
+                />
+                <Select onValueChange={(value) => setImageUrl(value)}>
+                  <SelectTrigger className="w-full overflow-hidden bg-white my-4 flex justify-center">
+                    <SelectValue
+                      placeholder="Theme"
+                      className="overflow-hidden bg-white"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {localUser?.utilityImages?.map((image, index) => (
+                      <SelectItem value={`${image.url}`} key={index}>
+                        <Image
+                          src={`${image.url}`}
+                          alt="image"
+                          width={200}
+                          height={200}
+                        />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                  {imageUrl && (
+                    <img
+                      src={`${imageUrl}`}
+                      alt="image"
+                      className="w-full h-auto mt-4"
+                    />
+                  )}
+                </Select>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              {isGenerating ? (
+                <span>
+                  Generating <Loader className="size-4 animate-spin" />
+                </span>
+              ) : (
+                <span>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <Button onClick={createPortfolio}>Continue</Button>
+                </span>
+              )}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <span className="relative selection:flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5">
+          <span className="absolute -top-2 -right-2 flex items-center gap-4">
+            <Share2
+              className="size-4  active:scale-90"
+              onClick={() => {
+                window.open(
+                  "/share/portfolio?u=" + localUser._id + "&s=" + portfolio._id,
+                  "_blank"
+                );
+              }}
+            />
           </span>
-        )}
+          <h1>{portfolio.portfolio.jobProfile}</h1>
+        </span>
       </div>
     </section>
   );

@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Career Mate 🚀
 
-First, run the development server:
+Career Mate is a comprehensive web application designed to assist users in their career development journey. It provides resources, tools, and guidance for job seekers, students, and professionals aiming to advance their careers. The project is built using Next.js with TypeScript.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Live URL: [careermate.vercel.app](https://careermate.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **AI-Powered Resume Builder 📄**: Create professional resumes with the help of AI. Users have full control to edit and customize their resumes.
+- **AI-Powered Portfolio Generator 🌟**: Build and update professional portfolios easily, similar to the resume building process.
+- **Networking 🤝**: Follow other users to stay updated on their projects, experiences, and new portfolio entries.
+- **Privacy Controls 🔒**: Users can make their portfolios private.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MrVineetRaj/career-mate.git
+   cd career-mate
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install the dependencies:**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Set up the environment variables:**
+   - Create a `.env.local` file in the root directory and add your environment variables.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```
+    MONGO_URI=
+    WEBHOOK_SECRET=
+    CLERK_SECRET_KEY=
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=
 
-## Deploy on Vercel
+    CLOUDINARY_CLOUD_NAME=
+    CLOUDINARY_API_SECRET=
+    CLOUDINARY_API_KEY=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    GEMINI_API_KEY=
+    NEXT_PUBLIC_BASE_URL=
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Usage
+
+1. **Build Resumes and Portfolios:**
+   - Use the web interface to build resumes and portfolios with AI assistance. Customize them as needed.
+
+2. **Network with Others:**
+   - Follow other users to stay updated on their projects, experiences, and new portfolio entries.
+
+3. **Manage Privacy:**
+   - Make your portfolio private if you wish to restrict access.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
+
+
+---
+
+Feel free to reach out if you have any questions or need further assistance! 😊
+
+---
+
+## Contact
+
+- **Author:** Vineet Raj
+- **Linked in:** [Vineet Raj](https://www.linkedin.com/in/vineet-raj-b96381257/)
+- **GitHub:** [MrVineetRaj](https://github.com/MrVineetRaj)
+
+Happy coding! 🎉
