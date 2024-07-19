@@ -142,8 +142,8 @@ const Dashboard = () => {
 
         {suggestions.length > 0 &&
           suggestions.map((suggestion, index) => (
-            <div className="mb-4 ">
-              <Sheet key={index}>
+            <div className="mb-4 " key={index}>
+              <Sheet >
                 <SheetTrigger>
                   <span className="active:scale-90 text-left">
                     {suggestion?.newSuggestion?.projectIdea}
