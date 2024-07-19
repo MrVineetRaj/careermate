@@ -247,6 +247,42 @@ const followersDetailsSchema = new mongoose.Schema({
   ],
 });
 
+const suggestionSchema = new mongoose.Schema({
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  clerkId: String,
+  source: String,
+  newSuggestion: {
+    newSkills: {
+      type: [String],
+      required: true,
+    },
+    freeResources: {
+      type: [String],
+      required: true,
+    },
+    projectIdea: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    roadMap: [
+      {
+        step: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+});
+
 let User: any;
 try {
   User = mongoose.model("User");
@@ -282,4 +318,18 @@ try {
   FollowersDetails = mongoose.model("FollowersDetails", followersDetailsSchema);
 }
 
-export { User, UserProfile, UserResume, UserPortfolio, FollowersDetails };
+let Suggestion: any;
+try {
+  Suggestion = mongoose.model("Suggestion");
+} catch {
+  Suggestion = mongoose.model("Suggestion", suggestionSchema);
+}
+
+export {
+  User,
+  UserProfile,
+  UserResume,
+  UserPortfolio,
+  FollowersDetails,
+  Suggestion,
+};

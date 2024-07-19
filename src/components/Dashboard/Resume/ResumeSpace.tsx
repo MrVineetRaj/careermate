@@ -3,14 +3,17 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useCareerMateStore } from "@/store/store";
 import { UserResumeInterface } from "@/config/TypeScriptTypes";
-import { createNewResume } from "@/config/mongoose/mongoFunction";
+import {
+  createNewResume,
+  saveSuggestions,
+} from "@/config/mongoose/mongoFunction";
 import { useUser } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
 import { downloadResume } from "@/config/OtherApiCalls";
 import { useRouter } from "next/navigation";
 
 const ResumeSpace = () => {
-  const { userResume, localUser } = useCareerMateStore();
+  const { userResume, localUser, userSuggestions } = useCareerMateStore();
   const { user, isSignedIn } = useUser();
   const [isCreating, setIsCreating] = React.useState(false);
   const router = useRouter();
@@ -19,9 +22,17 @@ const ResumeSpace = () => {
     if (!isSignedIn) {
       return;
     }
-    
+
     createNewResume(localUser._id, user.id, userResume)
-      .then((data) => {
+      .then(async (data) => {
+        const suggestion = {
+          owner: localUser._id,
+          clerkId: localUser.clerkId,
+          source: "resume",
+          idea: userSuggestions,
+        };
+        console.log(userSuggestions);
+        await saveSuggestions(suggestion);
         downloadResume(
           data.data._id,
           data.data.owner,
@@ -95,13 +106,13 @@ const ResumeSpace = () => {
                     <span>
                       {project.Github !== "" && project.Github !== "#" && (
                         <a
-                          href={project.GitHub}
+                          href={project?.GitHub}
                           className="text-sm text-wrap text-gray-500"
                         >
                           Github
                         </a>
                       )}{" "}
-                      {project.Demo !== "" && project.Demo !== "#" && (
+                      {project?.Demo !== "" && project?.Demo !== "#" && (
                         <a
                           href={project.Demo}
                           className="text-sm text-wrap text-gray-500"

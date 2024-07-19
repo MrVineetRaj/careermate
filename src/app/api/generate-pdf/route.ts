@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-// import puppeteer from "puppeteer";
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
+// import chromium from "@sparticuz/chromium";
+// import puppeteer from "puppeteer-core";
 
 
 export async function POST(request: Request) {
@@ -9,20 +9,20 @@ export async function POST(request: Request) {
 
   try {
 
-    // const browser = await puppeteer.launch({
-    //   headless: true,
-    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    //   executablePath: puppeteer.executablePath(),
-    // });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: puppeteer.executablePath(),
+    });
 
     // console.log("Chromium executable path:",await chromium.executablePath());
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
+    // const browser = await puppeteer.launch({
+    //   args: chromium.args,
+    //   defaultViewport: chromium.defaultViewport,
+    //   executablePath: await chromium.executablePath(),
+    //   headless: chromium.headless,
+    //   ignoreHTTPSErrors: true,
+    // });
 
     const page = await browser.newPage();
 

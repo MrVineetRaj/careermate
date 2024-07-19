@@ -28,6 +28,7 @@ export async function POST(req: Request) {
 
   const data = await req.json();
   const { prompt } = data;
+  console.log(prompt);
 
   try {
     const result = await chatSession.sendMessage(prompt);
@@ -44,6 +45,8 @@ export async function POST(req: Request) {
     jsonString = jsonString.replaceAll("*", "");
     jsonString = jsonString.replaceAll("#", "");
     jsonString = jsonString.replaceAll("\n", "");
+
+    console.log(JSON.parse(jsonString));
 
     return NextResponse.json({
       status: 200,

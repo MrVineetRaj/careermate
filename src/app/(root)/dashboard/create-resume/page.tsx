@@ -31,11 +31,12 @@ const CreateResume = () => {
     localUser,
     renderKey,
     updateRenderKey,
+    userSuggestions,
+    setUserSuggestions,
   } = useCareerMateStore();
   const [isGenerating, setIsGenerating] = useState(false);
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
-
 
   useEffect(() => {
     if (!localUser._id) {
@@ -83,12 +84,18 @@ const CreateResume = () => {
           title: data.message,
           variant: data.type,
         });
-        setUserResume(JSON.parse(data.data));
+
+        const finalResult = JSON.parse(data.data);
+
+        console.log(finalResult["resume"]);
+        // console.log(finalResult["suggestion"]);
+        setUserResume(finalResult["resume"]);
+        setUserSuggestions(finalResult["suggestion"]);
         router.push("/dashboard/create-resume/edit?r=" + localUser._id);
         setIsGenerating(false);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.message);
       setIsGenerating(false);
     }
   };

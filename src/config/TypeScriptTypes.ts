@@ -54,21 +54,6 @@ export interface userProfileInterface {
   }[];
 }
 
-export interface CareerMateStoreProps {
-  user_profile_db: userProfileInterface;
-  user_profile_active: userProfileInterface;
-  renderKey: number;
-  localUser: userSchemaInterface;
-  userResume: UserResumeInterface;
-  
-  setUserResume: (userResume: UserResumeInterface) => void;
-  setLocalUser: (user: userSchemaInterface) => void;
-  updateRenderKey: () => void;
-  setUserProfileActive: (user_profile: userProfileInterface) => void;
-  setUserProfileDB: (user_profile: userProfileInterface) => void;
-  updateUserProfileDb: (user_profile: userProfileInterface) => void;
-}
-
 export interface educationInterface {
   degree: string;
   institution: string;
@@ -224,4 +209,32 @@ export interface UserPortfolioInterface {
     title: string;
     description: string;
   }[];
+}
+
+export interface suggestionInterface {
+  newSkills: string[];
+  freeResources: string[];
+  projectIdea: string;
+  projectDescription: string;
+  roadMap: {
+    step: string;
+    description: string;
+  }[];
+}
+
+export interface CareerMateStoreProps {
+  user_profile_db: userProfileInterface;
+  user_profile_active: userProfileInterface;
+  renderKey: number;
+  localUser: userSchemaInterface;
+  userResume: UserResumeInterface;
+  userSuggestions: suggestionInterface;
+
+  setUserResume: (userResume: UserResumeInterface) => void;
+  setLocalUser: (user: userSchemaInterface) => void;
+  updateRenderKey: () => void;
+  setUserProfileActive: (user_profile: userProfileInterface) => void;
+  setUserProfileDB: (user_profile: userProfileInterface) => void;
+  updateUserProfileDb: (user_profile: userProfileInterface) => void;
+  setUserSuggestions: (userSuggestions: suggestionInterface) => void;
 }

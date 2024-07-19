@@ -21,6 +21,9 @@ const CareerMateProvider = ({ children }: { children: React.ReactNode }) => {
   const [userResume, setUserResume] = useState(
     {} as CareerMateStoreProps["userResume"]
   );
+  const [userSuggestions, setUserSuggestions] = useState(
+    {} as CareerMateStoreProps["userSuggestions"]
+  );
 
   const updateUserProfileDb = (
     user_profile: CareerMateStoreProps["user_profile_db"]
@@ -49,6 +52,9 @@ const CareerMateProvider = ({ children }: { children: React.ReactNode }) => {
 
         userResume,
         setUserResume,
+
+        userSuggestions,
+        setUserSuggestions,
       }}
     >
       {children}

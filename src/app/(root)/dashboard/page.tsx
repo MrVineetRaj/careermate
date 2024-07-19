@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import {
+  getSuggestions,
   getUser,
   getUserFollowers,
   getUserProfile,
@@ -32,6 +33,24 @@ const Dashboard = () => {
   const { user, isSignedIn } = useUser();
   const [followers, setFollowers] = React.useState([]);
   const [following, setFollowing] = React.useState([]);
+  const [suggestions, setSuggestions] = React.useState([
+    {
+      source: "",
+      _id: "",
+      newSuggestion: {
+        newSkills: [],
+        freeResources: [],
+        projectIdea: "",
+        description: "",
+        roadMap: [
+          {
+            step: "",
+            description: "",
+          },
+        ],
+      },
+    },
+  ]);
 
   useEffect(() => {
     if (isSignedIn) {
@@ -50,10 +69,15 @@ const Dashboard = () => {
             if (isSignedIn) {
               let clerkId = user.id;
               let userId: string = String(data.data._id);
-              getUserProfile(clerkId, userId).then((data) => {
+              getUserProfile(clerkId, userId).then(async (data) => {
                 if (data.status === 200) {
                   updateUserProfileDb(data.data);
                   updateRenderKey();
+                  getSuggestions(clerkId, "").then((res) => {
+                    if (res.status === 200) {
+                      setSuggestions(res.data);
+                    }
+                  });
                 }
               });
             }
@@ -111,6 +135,76 @@ const Dashboard = () => {
             {localUser.profileType} Account
           </Button>
         </span>
+      </div>
+
+      <div className="">
+        <h1 className="text-grad">Suggestions</h1>
+
+        {suggestions.length > 0 &&
+          suggestions.map((suggestion, index) => (
+            <div className="mb-4 ">
+              <Sheet key={index}>
+                <SheetTrigger>
+                  <span className="active:scale-90 text-left">
+                    {suggestion?.newSuggestion?.projectIdea}
+                  </span>
+                </SheetTrigger>
+                <SheetContent
+                  side={"right"}
+                  className="h-[100svh] overflow-y-scroll"
+                >
+                  <SheetHeader>
+                    <SheetTitle>Suggestion</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-4 font-thin text-sm">
+                    <span>
+                      {" "}
+                      <span className="font-bold text-base">Idea{" : "}</span>
+                      {suggestion?.newSuggestion?.projectIdea}
+                    </span>
+
+                    <span>
+                      <span className="font-bold  text-base">Skill{" : "}</span>
+                      {suggestion?.newSuggestion?.newSkills.join(", ")}
+                    </span>
+                    <span>
+                      <span className="font-bold  text-base">
+                        Resources{" : "}
+                      </span>
+                      {suggestion?.newSuggestion?.freeResources.join(", ")}
+                    </span>
+                    <span>
+                      <span className="font-bold  text-base">
+                        Description{" : "}
+                      </span>
+                      {suggestion?.newSuggestion?.description}
+                    </span>
+                    {/* <span>{suggestion?.newSuggestion?.roadMap}</span> */}
+                    <span className="font-bold  text-base">Roadmap{" : "}</span>
+
+                    {suggestion?.newSuggestion?.roadMap?.map((road, index) => (
+                      <span
+                        key={index}
+                        className="flex flex-col gap-2 mb-2 py-0"
+                      >
+                        <span>
+                          {" "}
+                          <span className="font-bold">
+                            Step {index + 1 + " : "}
+                          </span>{" "}
+                          {road.step}
+                        </span>
+                        <span>
+                          <span className="font-bold">Descriptin :</span>{" "}
+                          {road.description}
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          ))}
       </div>
     </div>
   );

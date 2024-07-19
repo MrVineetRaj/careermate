@@ -66,6 +66,7 @@ const createNewResume = async (
     body: JSON.stringify({ owner, ownerClerkId, userResume }),
   });
   const response = await res.json();
+  console.log(response.data);
   toast({
     title: response.message,
     variant: response.type,
@@ -133,6 +134,30 @@ const getUserFollowers = async (userId: string) => {
   const data = await res.json();
   return data;
 };
+
+const saveSuggestions = async (data: any) => {
+  const res = await fetch("/api/suggestion", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const response = await res.json();
+  toast({
+    title: response.message,
+    variant: response.type,
+  });
+  return response;
+};
+
+const getSuggestions = async (userId: string, suggestionId: string) => {
+  const res = await fetch(`/api/suggestion?u=${userId}&s=${suggestionId}`);
+  const data = await res.json();
+  console.log(data);
+  return data;
+};
+
 export {
   getUser,
   getUserProfile,
@@ -144,4 +169,6 @@ export {
   getUserPortfolio,
   handleFollow,
   getUserFollowers,
+  saveSuggestions,
+  getSuggestions,
 };

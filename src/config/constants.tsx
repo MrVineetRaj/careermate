@@ -289,7 +289,10 @@ export const userResume = {
     { title: "GitHub", href: "https://github.com/johndoe" },
   ],
   skills: [
-    { label: "Programming Languages", values: "JavaScript, Python, Java, C++" },
+    {
+      label: "Programming Languages",
+      values: "JavaScript, Python, Java, C++",
+    },
     { label: "Frameworks", values: "React, Angular, Node.js, Django" },
     { label: "Databases", values: "MySQL, PostgreSQL, MongoDB" },
   ],
@@ -355,77 +358,98 @@ export const userResume = {
 };
 
 export const userPortfolioFormate = {
-  Contact: {
-    email: "String",
-    links: [
+  portfolio: {
+    Contact: {
+      email: "String",
+      links: [
+        {
+          title: "String",
+          href: "String",
+        },
+      ],
+    },
+    name: "String",
+    jobProfile: "String",
+    summary: "String maximum 60 words and minimum 40 words",
+    imageUrl: "String",
+    about: "String",
+    skills: [
+      {
+        label: "String",
+        values: "String",
+      },
+    ],
+    experiences: [
       {
         title: "String",
-        href: "String",
+        company: "String",
+        location: "String",
+        startDate: "String",
+        endDate: "String",
+        description: [String],
+      },
+    ],
+    projects: [
+      {
+        title: "String",
+        description: [String],
+        imageUrl: "String",
+        technologies: "String",
+        GitHub: "String",
+      },
+    ],
+    education: [
+      {
+        degree: "String",
+        institution: "String",
+        location: "String",
+        startYear: "String",
+        endYear: "String",
+        marks: "String",
+      },
+    ],
+    achievements_certification: [
+      {
+        title: "String",
+        description: "String",
+      },
+    ],
+    Certifications: [
+      {
+        title: "String",
+        description: "String",
       },
     ],
   },
-  name: "String",
-  jobProfile: "String",
-  summary: "String maximum 60 words and minimum 40 words",
-  imageUrl: "String",
-  about: "String",
-  skills: [
+};
+
+export const suggestionFormate = {
+  newSkills: "[String]",
+  freeResources: "[string]",
+  projectIdea: "string",
+  description: "string",
+  roadMap: [
     {
-      label: "String",
-      values: "String",
-    },
-  ],
-  experiences: [
-    {
-      title: "String",
-      company: "String",
-      location: "String",
-      startDate: "String",
-      endDate: "String",
-      description: [String],
-    },
-  ],
-  projects: [
-    {
-      title: "String",
-      description: [String],
-      imageUrl: "String",
-      technologies: "String",
-      GitHub: "String",
-    },
-  ],
-  education: [
-    {
-      degree: "String",
-      institution: "String",
-      location: "String",
-      startYear: "String",
-      endYear: "String",
-      marks: "String",
-    },
-  ],
-  achievements_certification: [
-    {
-      title: "String",
-      description: "String",
-    },
-  ],
-  Certifications: [
-    {
-      title: "String",
-      description: "String",
+      step: "string",
+      description: "string",
     },
   ],
 };
 
+const promptSetForResume = {
+  resume: userResumeFormate,
+  suggestion: suggestionFormate,
+};
 export const prompt = {
-  resume: ` in formate of ${JSON.stringify(
-    userResumeFormate
-  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and there should be maximum of 3 skill section and each can have multiple values and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the relevance and sort the skills according to their importance for the given job profile`,
+  resume: `  also give me suggestion in formate of ${JSON.stringify(
+    promptSetForResume
+  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and there should be maximum of 3 skill section and each can have multiple values and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the relevance and sort the skills according to their importance for the given job profile  `,
 
   portfolio: ` in formate of ${JSON.stringify(
     userPortfolioFormate
-  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the complexity or sort sort everything that fits you best`,
+  )} and provide the json data and nothing else  also try to generate text according to make it more professional and for each project and experience  create a description with 4 one line bullet points starting with a perfect action word and return job profile as simple <job profile> and if it's an internship the make jobProfile as Aspiring <job profile> and one more thing sort the projects according to the complexity or sort sort everything that fits you best and also provide me suggestion in formate ${JSON.stringify(
+    suggestionFormate
+  )}`,
 };
 
 // for job profile and company name create a resume using data {} in formate of userResumeFormate and provide the json data and nothing else
