@@ -2,19 +2,11 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 
-
-
 export async function POST(request: Request) {
   const reqObj = await request.json();
 
   try {
-
-    // const browser = await puppeteer.launch({
-    //   headless: true,
-    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    //   executablePath: puppeteer.executablePath(),
-    // });
-
+    // Launch browser with chromium configuration
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -40,13 +32,11 @@ export async function POST(request: Request) {
     // Set response headers to indicate a file attachment
     const responseHeaders = new Headers();
     responseHeaders.set("Content-Type", "application/pdf");
-    responseHeaders.set(
-      "Content-Disposition",
-      `attachment; filename="${reqObj.f} "`
-    );
+    responseHeaders.set("Content-Disposition", `attachment; filename="${reqObj.f}.pdf"`);
 
     // Return the PDF buffer as a response
     return new NextResponse(pdfBuffer, { headers: responseHeaders });
+
   } catch (error: any) {
     console.error("Error generating PDF:", error.message);
     return NextResponse.json({ success: false, error: error.message });
