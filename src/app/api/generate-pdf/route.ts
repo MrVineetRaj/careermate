@@ -1,21 +1,26 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-// import chromium from "chrome-aws-lambda";
-// import puppeteer from "puppeteer-core";
+// import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 
 
 export async function POST(request: Request) {
   const reqObj = await request.json();
 
   try {
-    
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: puppeteer.executablePath(), // Ensure Puppeteer uses the bundled Chromium
-    });
+    // const browser = await puppeteer.launch({
+    //   headless: true,
+    //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    //   executablePath: puppeteer.executablePath(), // Ensure Puppeteer uses the bundled Chromium
+    // });
 
-  
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+    
     // console.log("Chromium executable path:",await chromium.executablePath());
     // const browser = await puppeteer.launch({
     //   args: chromium.args,
