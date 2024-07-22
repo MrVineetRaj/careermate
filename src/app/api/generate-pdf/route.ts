@@ -1,17 +1,12 @@
-import { NextResponse } from "next/server";
-import puppeteer from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
+import { NextResponse } from 'next/server';
+import { chromium } from 'playwright';
 
 export async function POST(request: Request) {
   const reqObj = await request.json();
 
   try {
-    // Launch browser with chromium configuration
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+    const browser = await chromium.launch({
+      headless: true,
     });
 
     const page = await browser.newPage();
@@ -19,26 +14,23 @@ export async function POST(request: Request) {
     await page.goto(
       `${process.env.NEXT_PUBLIC_BASE_URL}/share/resume?r=${reqObj.r}&u=${reqObj.u}`,
       {
-        waitUntil: "networkidle0",
+        waitUntil: 'networkidle',
       }
     );
 
-    // Capture the PDF in memory
-    await page.setViewport({ width: 595, height: 842 });
-    const pdfBuffer = await page.pdf({ format: "a4", printBackground: true });
+    await page.setViewportSize({ width: 595, height: 842 });
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
 
     await browser.close();
 
-    // Set response headers to indicate a file attachment
     const responseHeaders = new Headers();
-    responseHeaders.set("Content-Type", "application/pdf");
-    responseHeaders.set("Content-Disposition", `attachment; filename="${reqObj.f}.pdf"`);
+    responseHeaders.set('Content-Type', 'application/pdf');
+    responseHeaders.set('Content-Disposition', `attachment; filename="${reqObj.f}.pdf"`);
 
-    // Return the PDF buffer as a response
     return new NextResponse(pdfBuffer, { headers: responseHeaders });
 
   } catch (error: any) {
-    console.error("Error generating PDF:", error.message);
+    console.error('Error generating PDF:', error.message);
     return NextResponse.json({ success: false, error: error.message });
   }
 }
