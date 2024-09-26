@@ -9,15 +9,14 @@ Live URL: [careermate.vercel.app](https://careermate.vercel.app/)
 
 - **AI-Powered Resume Builder 📄**: Create professional resumes with the help of AI. Users have full control to edit and customize their resumes.
 - **AI-Powered Portfolio Generator 🌟**: Build and update professional portfolios easily, similar to the resume building process.
-- **Networking 🤝**: Follow other users to stay updated on their projects, experiences, and new portfolio entries.
 - **Privacy Controls 🔒**: Users can make their portfolios private.
 
 ## Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/MrVineetRaj/career-mate.git
-   cd career-mate
+   git clone https://github.com/MrVineetRaj/careermate.git
+   cd careermate
    ```
 
 2. **Install the dependencies:**
@@ -55,11 +54,7 @@ Live URL: [careermate.vercel.app](https://careermate.vercel.app/)
 
 1. **Build Resumes and Portfolios:**
    - Use the web interface to build resumes and portfolios with AI assistance. Customize them as needed.
-
-2. **Network with Others:**
-   - Follow other users to stay updated on their projects, experiences, and new portfolio entries.
-
-3. **Manage Privacy:**
+2. **Manage Privacy:**
    - Make your portfolio private if you wish to restrict access.
 
 ## Contributing
@@ -76,7 +71,7 @@ Feel free to reach out if you have any questions or need further assistance! �
 ## Contact
 
 - **Author:** Vineet Raj
-- **Linked in:** [Vineet Raj](https://www.linkedin.com/in/vineet-raj-b96381257/)
+- **Linked in:** [Vineet Raj](https://www.linkedin.com/in/mrvineetraj/)
 - **GitHub:** [MrVineetRaj](https://github.com/MrVineetRaj)
 
 Happy coding! 🎉
