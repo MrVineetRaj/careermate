@@ -5,9 +5,10 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="flex w-full min-h-[80vh]  flex-col justify-center items-center px-0 md:px-8 gap-8"
+      className="relative z-[20]  flex w-full min-h-[80vh]  flex-col justify-center items-center px-0 md:px-8 gap-8 mt-32"
     >
-      <h1 className="text-4xl  md:text-5xl lg:text-6xl text-center">
+      <div className="absolute -z-[20] h-[40%] w-[80%] m-auto rounded-full   bg-primary opacity-15 blur-3xl" />
+      <h1 className="text-4xl  md:text-5xl lg:text-6xl text-center ">
         Unleash Your Impact.{" "}
         <span className="text-grad">Empower Your Career.</span>{" "}
       </h1>

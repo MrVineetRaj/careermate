@@ -11,10 +11,13 @@ import {
 
 export default function Home() {
   return (
-    <div className="bg-background flex flex-col  items-center h-[100svh] overflow-y-scroll">
+    <div
+      className="bg-background flex flex-col  items-center h-[100svh] overflow-y-scroll"
+      style={{ scrollbarWidth: "none" }}
+    >
       <Hero />
       <Features />
-      <Testimonial />
+      {/* <Testimonial /> */}
       <AboutMe />
       {/* <Contact /> */}
       <Footer />

@@ -116,36 +116,52 @@ const Dashboard = () => {
   return (
     <div key={renderKey} className="px-8">
       <div className="">
-        <div className="bg-white px-8 py-2 rounded-lg shadow-lg flex justify-between items-center">
+        <div className="bg-white px-2 md:px-8 py-3 rounded-lg shadow-lg flex justify-between items-center">
           <span className="text-grad text-lg font-semibold  flex gap-2">
-            <span>Add Utility Images</span>
-            <span className="hidden md:block">
+            <span className="text-base md:text-lg lg:text-xl ">
+              Add Utility Images
+            </span>
+            <span className="hidden lg:block">
               to your profile that you want to use in your project or portfolio
             </span>
           </span>
           <UtilityImages />
         </div>
       </div>
-      <div className="pt-4 flex justify-between items-center">
-        <span>{localUser.userName}</span>
-        <span className="flex gap-4 items-center">
+      <div className="pt-4 flex-col md:flex-row justify-between items-center">
+        <span className="text-gray-400 font-semibold text-[12px]">
+          {localUser.userName}
+        </span>
+        <span className="flex gap-4 items-center justify-between">
           <p>{followers.length} Followers</p>
           <p>{following.length} Following</p>
-          <Button className="active:scale-90" onClick={handleProfileType}>
+          <Button
+            className="hidden sm:block active:scale-90"
+            onClick={handleProfileType}
+          >
             {localUser.profileType} Account
           </Button>
         </span>
+        <Button
+          className="block sm:hidden active:scale-90 w-full mt-2 mb-4"
+          onClick={handleProfileType}
+        >
+          {localUser.profileType} Account
+        </Button>
       </div>
 
       <div className="">
-        <h1 className="text-grad">Suggestions</h1>
+        <span className="relative font-bold text-grad text-2xl md:text-3xl w-auto">
+          <span className="absolute bottom-0 blur-sm -z-[10] h-[5px] bg-white/80 w-[100%]"></span>
+          Suggestions
+        </span>
 
         {suggestions.length > 0 &&
           suggestions.map((suggestion, index) => (
-            <div className="mb-4 " key={index}>
-              <Sheet >
-                <SheetTrigger>
-                  <span className="active:scale-90 text-left">
+            <div className="flex flex-col gap-4" key={index}>
+              <Sheet>
+                <SheetTrigger className="text-justify line-clamp-2 my-1 border-b ">
+                  <span className="active:scale-90 text-justify text-sm text-gray-400 ">
                     {suggestion?.newSuggestion?.projectIdea}
                   </span>
                 </SheetTrigger>

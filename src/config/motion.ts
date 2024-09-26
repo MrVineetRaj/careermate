@@ -28,7 +28,7 @@ const slideAnimationUp = {
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 2.5 },
   },
   exit: {
     y: "50%", // Adjust this value for the exit position to above
@@ -37,35 +37,27 @@ const slideAnimationUp = {
 
 const slideAnimationLeftAndVibrate = {
   initial: {
-    x: "-200%", // Adjust this value for the initial position from left
+    x: "-150%", // Adjust this value for the initial position from left
   },
   animate: {
     x: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 1.5 },
   },
   exit: {
-    x: "-200%", // Adjust this value for the exit position to left
-  },
-  whileHover: {
-    x: [-20, 20],
-    transition: { duration: 0.5, repeat: Infinity },
+    x: "-150%", // Adjust this value for the exit position to left
   },
 };
 
 const slideAnimationRightAndVibrate = {
   initial: {
-    x: "200%", // Adjust this value for the initial position from right
+    x: "150%", // Adjust this value for the initial position from right
   },
   animate: {
     x: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 1.5 },
   },
   exit: {
-    x: "200%", // Adjust this value for the exit position to right
-  },
-  whileHover: {
-    x: [-20, 20],
-    transition: { duration: 0.5, repeat: Infinity },
+    x: "150%", // Adjust this value for the exit position to right
   },
 };
 

@@ -23,33 +23,28 @@ const FeatureCard = ({ feature }: { feature: featureInterface }) => {
 const Features = () => {
   return (
     <div className="flex flex-col justify-center items-center ">
-      <div className="w-[100%] md:w-[80%] lg:w-[60%] flex flex-col  gap-8">
+      <div className="w-[90%] md:w-[60vw] flex flex-col md:grid grid-cols-2 gap-4">
         {features.map((feature: featureInterface, index: number) => {
-          if (feature.alignment === "left") {
-            return (
-              <div key={index} className="flex  gap-8 justify-center">
-                <div className="px-4 md:flex-[0.5]">
-                  <FeatureCard key={feature.title} feature={feature} />
-                </div>
-                <div className="hidden md:block relative w-0.5 bg-grad h-full">
-                  <div className="absolute size-8 rounded-full bg-grad -top-2 -left-4"></div>
-                </div>
-                <div className="hidden md:block w-[400px] h-[300px] flex-[0.5] "></div>
-              </div>
-            );
-          } else {
-            return (
-              <div key={index} className="flex  gap-8 justify-center">
-                <div className="hidden md:block w-[400px] h-[300px] flex-[0.5] "></div>
-                <div className="hidden md:block relative w-0.5 bg-grad h-full">
-                  <div className="absolute size-8 rounded-full bg-grad -top-2 -left-4"></div>
-                </div>
-                <div className="px-4 md:flex-[0.5]">
-                  <FeatureCard key={feature.title} feature={feature} />
-                </div>
-              </div>
-            );
-          }
+          return (
+            <div
+              key={index}
+              className="relative flex flex-1 flex-col gap-8 w-[full] min-h-[400px] text-left bg-primary/40 py-4 rounded-lg items-start p-4"
+              // style={{ textAlign: feature.alignment === "left" ? "right" : "left" }}
+              {...(feature.alignment === "left"
+                ? slideAnimationLeftAndVibrate
+                : slideAnimationRightAndVibrate)}
+              // animate={{}}
+            >
+              <div className=" absolute top-8 left-6 size-8  rounded-full border-2 border-white bg-grad " />
+              <div className=" absolute top-0 left-10 h-8  border border-primary bg-grad" />
+              <h2 className="text-white text-left mt-16 md:text-4xl">
+                {feature.title}
+              </h2>
+              <p className="text-lg  text-justify md:text-xl font-semibold text-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          );
         })}
       </div>
     </div>

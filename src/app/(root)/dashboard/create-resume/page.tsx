@@ -101,7 +101,7 @@ const CreateResume = () => {
   };
   return (
     <section
-      className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll "
+      className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll scrollbar-hidden"
       key={renderKey}
     >
       <h1 className="text-grad mb-2 pb-2 border-b-2 border-primary">
@@ -113,14 +113,15 @@ const CreateResume = () => {
           href="/dashboard/profile"
           className="text-grad text-lg font-semibold mb-4"
         >
-          Complete Your Profile before creating a resume
+          Complete Your Profile before
+          <span className="hidden md:block"> creating a resume</span>
         </Link>
       </div>
 
-      <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-center">
+      <div className=" flex flex-wrap gap-4 mb-36 mt-6 justify-between">
         <AlertDialog>
           <AlertDialogTrigger>
-            <span className="flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
+            <span className="flex w-[200px] h-[250px] rounded-lg  bg-grad justify-center items-center cursor-pointer active:scale-90 transition duration-150 active:bg-white/5">
               <Plus className="w-20 h-20" />
             </span>
           </AlertDialogTrigger>
@@ -136,10 +137,9 @@ const CreateResume = () => {
                   placeholder="Job Profile *"
                   onChange={(e) => setJobProfile(e.target.value)}
                 />
-                <input
-                  type="text"
+                <textarea
                   className="w-full px-4 py-2 rounded-md mt-4 text-black"
-                  placeholder="Company Name "
+                  placeholder="Job Description "
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
               </AlertDialogDescription>
@@ -162,7 +162,7 @@ const CreateResume = () => {
         {resumes &&
           resumes?.map((item: any, index: number) => (
             <span
-              className="relative flex w-[200px] h-[250px] rounded-lg  bg-white/10 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5"
+              className="relative flex w-[200px] h-[250px] rounded-lg  bg-primary/50 justify-center items-center cursor-pointer transition duration-150 active:bg-white/5"
               key={index}
             >
               <span className="absolute -top-2 -right-2 flex items-center gap-4">
@@ -197,7 +197,9 @@ const CreateResume = () => {
                 />
               </span>
 
-              {item.resume.jobProfile}
+              <span className="text-white text-center px-4  text-lg font-semibold">
+                {item.resume.jobProfile}
+              </span>
             </span>
           ))}
       </div>

@@ -29,7 +29,7 @@ const DisplayProjects = ({
     <div>
       <h3 className="text-primary flex justify-between items-center pb-1 border-b border-b-primary">
         Projects{" "}
-        <span className="text-sm text-orange-500">
+        <span className="hidden lg:block text-sm text-orange-500">
           to change the image of project delete the project and create new
           project
         </span>

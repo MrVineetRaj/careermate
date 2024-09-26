@@ -43,7 +43,6 @@ const Profile = () => {
       let clerkId = user.id;
       let userId: string = String(searchParams.get("r"));
       getUserProfile(clerkId, userId).then((data) => {
-        
         if (data.status === 200) {
           updateUserProfileDb(data.data);
           updateRenderKey();
@@ -66,12 +65,11 @@ const Profile = () => {
         }
       })
       .catch((error) => {
-        
         setIsSaving(false);
       });
   };
   return (
-    <section className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll">
+    <section className="px-4 sm:px-8 lg:px-16 h-[100svh] overflow-y-scroll scrollbar-hidden">
       <h1 className="text-grad mb-16 pb-2 border-b-2 border-primary flex justify-between items-center">
         <span>Profile</span>
         <Button className="bg-grad active:scale-90" onClick={handleSave}>
